@@ -21,7 +21,7 @@
             $SoLuongSP = mysqli_real_escape_string($this->db->link, $data['SoLuongSP']);
             //chua dung toi image
             $Size = mysqli_real_escape_string($this->db->link, $data['Size']);
-            $MauSacSP = mysqli_real_escape_string($this->db->link, $data['MauSacSP']);
+           
             $MaLoai = mysqli_real_escape_string($this->db->link, $data['MaLoai']);
             $MaNSX = mysqli_real_escape_string($this->db->link, $data['MaNSX']);
             $MoTaSP = mysqli_real_escape_string($this->db->link, $data['MoTaSP']);
@@ -59,8 +59,8 @@
                     return $alert;
                 }else{
                     move_uploaded_file($file_temp,$uploaded_image);
-                    $query = "INSERT INTO `sanpham`(`TenSP`, `GiaSP`, `SoLuongSP`, `HinhAnhSP`, `Size`, `MauSacSP`, `MaLoai`, `MaNSX`, `MoTaSP`) 
-                        VALUES ('$TenSP','$GiaSP','$SoLuongSP','$unique_image','$Size','$MauSacSP','$MaLoai','$MaNSX','$MoTaSP')"; //limit 1 là lấy ra 1 cái đúng thôi
+                    $query = "INSERT INTO `sanpham`(`TenSP`, `GiaSP`, `SoLuongSP`, `HinhAnhSP`, `Size`, `MaLoai`, `MaNSX`, `MoTaSP`) 
+                        VALUES ('$TenSP','$GiaSP','$SoLuongSP','$unique_image','$Size','$MaLoai','$MaNSX','$MoTaSP')"; //limit 1 là lấy ra 1 cái đúng thôi
                     $result = $this->db->insert($query);
                     $alert = "<div class='alert alert-success'>
                                     <strong>Thêm thành công!</strong> Thêm dữ liệu sản phẩm thành công.

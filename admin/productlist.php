@@ -90,7 +90,6 @@
                                             <th>Số lượng</th>
                                             <th>Hình ảnh</th>
                                             <th>Size</th>
-                                            <th>Màu sắc</th>
                                             <th>Loại sản phẩm</th>
                                             <th>Nhà sản xuất</th>
                                             <th>Mô tả</th>
@@ -116,7 +115,6 @@
                                             <td><?php echo $result['SoLuongSP']?></td>
                                             <td><img src="products/<?php echo $result['HinhAnhSP']?>" width="50"></td>
                                             <td><?php echo $result['Size']?></td>
-                                            <td><?php echo $result['MauSacSP']?></td>
                                             <td><?php echo $result['MaLoai']?></td>
                                             <td><?php echo $result['MaNSX']?></td>
                                             <td><?php echo $fm->textShorten($result['MoTaSP'],50)?></td>

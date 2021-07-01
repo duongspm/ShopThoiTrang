@@ -91,10 +91,6 @@
                                             <td><input type="text" name="Size" id="Size" value="Unisex"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Màu sắc</td>
-                                            <td><input type="text" name="MauSacSP" id="MauSacSP"/> </td>
-                                        </tr>
-                                        <tr>
                                             <td>Loại sản phẩm</td>
                                             <td>
                                                 <select name="MaLoai" id="MaLoai" class="MaLoai">
@@ -160,33 +156,7 @@
                         {
                             echo $insertProduct;
                         }?>
-                        <!-- Danh sách sản phẩm-->
-                    <div class="block">
-                        <h2>Danh sách sản phẩm</h2>
-                        <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Tên sản phẩm</th>
-                                            <th>Mô tả</th>
-                                            <th>Trạng thái</th>
-                                            <th>Hình ảnh</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><button class="btn btn-success">Sửa</button></td>
-                                            <td><button class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa thệc không ???')">Xóa</button></td>
-                                        </tr>
-                                    </tbody>
-                        </table>
-                    </div>
-                    <!-- Danh sách loại sản phẩm-->
+                       
                     </div>
 
                     

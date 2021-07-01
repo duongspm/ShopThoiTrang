@@ -6,9 +6,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Trang Chủ
                             </a>
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="comment.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Thêm loại sản phẩm
+                                Bình Luận Của Khách hàng
                             </a>
                             <!-- thêm mới -->
                             <div class="sb-sidenav-menu-heading">Quản lý sản phẩm</div>
@@ -20,7 +20,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="catadd.php">Thêm loại sản phẩm</a>
-                                    <a class="nav-link" href="layout-sidenav-light.php">Danh sách sản phẩm</a>
+                                    <a class="nav-link" href="cat.php">Danh sách sản phẩm</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">

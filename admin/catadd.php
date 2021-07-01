@@ -1,13 +1,37 @@
 <?php
-    include_once '../classes/category.php';
-    $cat = new category();
-    if($_SERVER = $_POST['catName']);
-    {
-        $catName = $_POST['catName'];
-        $catImage = $_POST['catImage'];
-        $catDes = $_POST['catDes'];
-        $insertCat = $cat->insert_category($catName, $catImage, $catDes);
+    include "../admin/include/header_admin.php";
+    if($_SERVER["REQUEST_METHOD"]=="POST") {
+        $catName = $_POST["catName"];
+        $catDes = $_POST["catDes"];
+        $catImage = $_POST["image"];
+        // $permited = array('jpg','jpeg','png','gif');
+        // $file_name = $_FILES['image']['name'];
+        // $file_size = $_FILES['image']['size'];
+        // $file_temp = $_FILES['image']['tmp_name'];
+
+        // $div = explode('.',$file_name);
+        // $file_ext = strtolower(end($div));
+        // $unique_image = substr(md5(time()),0,10).'.'.$file_ext;
+        // $uploaded_image = "products/".$unique_image;
+        // move_uploaded_file($file_temp,$uploaded_image);
+        // if($catImage["type"]!="image/jpeg" && $catImage["type"]!="image/png")
+        // {
+        //     echo "<script>alert('Hãy chọn đúng định dạng hình!')</script>";
+        //     return;
+        // }
+        //move_uploaded_file($catImage["tmp_name"],"../images/products/".$catImage["name"]);
+        $themDuLieu="INSERT INTO loaisanpham(TenLoaiSP,HinhAnhLoaiSP,ChuThichLoaiSP) VALUES ('".$catName."','".$catImage."','".$catDes."')";
+        if(mysqli_query($conn,$themDuLieu))
+        {
+            echo "<script>alert('Thêm loại sản phẩm thành công !')</script>";
+            echo "<script>location='cat.php';</script>";
+        }
+        else
+        {
+            echo "<script>alert('Đã xảy ra lỗi !')</script>";
+        }
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,34 +60,7 @@
     </head>
     <body class="sb-nav-fixed">
         <!-- Navbar -->
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.php">Staff Camper Store</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><strong></strong></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="?action=logout">Đăng xuất</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+        <?php include 'include/navbaradmin.php'?>
         <!-- Navbar -->
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -79,7 +76,8 @@
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                                <form action="catadd.php" method="post" enctype="multipart/form-data">
+                            
+                                <form action="catadd.php" method="POST" enctype="multipart/form-data">
                                     <table >
                                         <tr>
                                             <td width="167">Tên loại sản phẩm</td>
@@ -89,7 +87,7 @@
                                         </tr>
                                         <tr>
                                             <td>Hình ảnh loại sản phẩm</td>
-                                            <td><input type="file" name="catImage" id="catImage" class="catImage"/></td>
+                                            <td><input type="file" name="image" id="image" class="image"/></td>
                                         </tr>
                                         <tr>
                                             <td>Mô tả loại sản phẩm</td>
@@ -97,61 +95,12 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td>
-                                                <input type="submit" value="Thêm mới" class="btn btn-success button_insert ">
-                                                <!-- <input  type="submit" value="Thêm" class="btn btn-block btn-info"> -->
-                                            </td>
+                                            <td><input id="Luu" type="submit" value="Lưu" class="btn btn-primary"></td>
                                         </tr>
                                     </table>
                                 </form>
                             </div>
                         </div>
-                        <div class="result"></div>
-                        <?php if(isset($insertCat))
-                        {
-                            echo $insertCat;
-                        }?>
-                        <!-- Danh sách loại sản phẩm-->
-                    <div class="block">
-                    <div class="block">
-                        <h2>Danh sách loại sản phẩm</h2>
-                        <form enctype="multipart/form-data">
-                        <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Mã</th>
-                                            <th>Tên loại sản phẩm</th>
-                                            <th>Mô tả</th>
-                                            <th>Hình ảnh</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        $show_cat = $cat->show_category();
-                                        if($show_cat)
-                                        {
-                                            $i = 0;
-                                            while ($result = $show_cat -> fetch_assoc())
-                                            {
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $result['MaLoai']?></td>
-                                            <td><?php echo $result['TenLoaiSP']?></td>
-                                            <td><?php echo $result['ChuThichLoaiSP']?></td>
-                                            <td><img src="images/<?php echo $result['HinhAnhLoaiSP']?>"></td>  
-                                            <td><a href="catedit.php?catid=<?php echo $result['MaLoai']?>" class="btn btn-success">Sửa</a></td>
-                                            <td><a href="?catid=<?php echo $result['MaLoai']?>" class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa thệc không ???')">Xóa</a></td>
-                                        </tr>
-                                    <?php
-                                            }
-                                        }
-                                    ?>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Danh sách loại sản phẩm-->
                     </div>
                 </main>
             </div>
@@ -159,21 +108,25 @@
         <?php include 'include/footeradmin.php' ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <!-- <script type="text/javascript">
-            $(document).ready(function(){//khi trang được load thì tất cả lệnh đều đc thực thi
-            
-                function fetch_data(){
-                    $.ajax({
-                        url:'../classes/catAjax.php',
-                        method:'POST',
-                        success:function(data){
-                            $('#load_data').html(data);
-                            fetch_data();
-                        }
-                        });
-                }
-                fetch_data();
+        <script>
+            $(document).ready(function(){
+                $('#Luu').click(function(){
+                    catName=$('#catName').val();
+                    catDes=$('#catDes').val();
+                    catImage=$('#catImage').val();
+
+                    loi=0;
+                    if(catName=="" || catDes=="" || catImage=="")
+                    {
+                        loi++;
+                        alert("Vui lòng nhập đầy đủ thông tin loại sản phẩm !! Bởi vì nó rất quan trọng");
+                    }
+                    if(loi!=0)
+                    {
+                        return false;
+                    }
+                });
             });
-    </script> -->
+        </script>
     </body>
 </html>
