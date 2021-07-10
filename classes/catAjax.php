@@ -1,8 +1,8 @@
 <?php
-    $conn = mysqli_connect("localhost","root","","shop") or die ("Connect fail");
+    $conn = mysqli_connect("localhost","root","","shopthoitrang") or die ("Connect fail");
 
     $output ='';
-    $sql_select = mysqli_query($conn,"SELECT * FROM loaisanpham ORDER BY MaLoai Desc");
+    $sql_select = mysqli_query($conn,"SELECT * FROM loaisp ORDER BY MaLoaiSP Desc");
     //nối chuỗi
     $output .='
         <div class ="table table-responsive">
@@ -19,12 +19,12 @@
         {
             $output .='
                 <tr>
-                    <td>'.$rows['MaLoai'].'</td>
-                    <td>'.$rows['TenLoaiSP'].'</td>
-                    <td>'.$rows['ChuThichLoaiSP'].'</td>
+                    <td>'.$rows['MaLoaiSP'].'</td>
+                    <td>'.$rows['TenLoai'].'</td>
+                    <td>'.$rows['MoTa'].'</td>
                     <td>'.$rows['HinhAnhLoaiSP'].'</td>
-                    <td><button data-id_sua='.$rows['MaLoai'].' class="btn btn-sm btn-info update_data" name="update_data">Sửa</button></td>
-                    <td><button data-id_xoa='.$rows['MaLoai'].' class="btn btn-sm btn-danger del_data" name="delete_data">Xóa</button></td>
+                    <td><button data-id_sua='.$rows['MaLoaiSP'].' class="btn btn-sm btn-info update_data" name="update_data">Sửa</button></td>
+                    <td><button data-id_xoa='.$rows['MaLoaiSP'].' class="btn btn-sm btn-danger del_data" name="delete_data">Xóa</button></td>
                 </tr>
             ';
         }

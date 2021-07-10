@@ -3,13 +3,14 @@
     global $conn;
 
     $TongSanPham=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM sanpham"));
-    $TongSoLuongLoaiSP=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM loaisanpham"));
-    $TongSoLuongKH=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM khachhang"));
-    $TongSoLuongAdmin=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM admin"));
-    $TongSoLuongComment=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM comment"));
-    $TongSoLuongDonHang=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM donhang"));
-    $TongDonHangChuaGiao=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM donhang WHERE TrangThai=0"));
-    $TongDonHangDaGiao=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM donhang WHERE TrangThai=1"));
+    $TongSoLuongLoaiSP=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM loaisp"));
+    $TongSoLuongKH=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM thanhvien"));
+    $TongSoLuongAdmin=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM nhanvien"));
+    $TongSoLuongComment=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM binhluan"));
+    $TongNhaSanXuat=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM nhasanxuat"));
+    $TongSoLuongDonHang=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM dondat"));
+    $TongDonHangChuaGiao=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM dondat WHERE TrangThai=0"));
+    $TongDonHangDaGiao=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM dondat WHERE TrangThai=1"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +21,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Staff Camper Store</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -68,24 +70,24 @@
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Đơn Hàng</div>
+                                    <div class="card-body">Đơn Hàng Đã Giao</div>
                                         <div class="center">
-                                            <h1><?php echo $TongSoLuongDonHang?></h1>
+                                            <h1><?php echo $TongDonHangDaGiao?></h1>
                                         </div>   
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="DonDatHang.php">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Bình luận sản phẩm</div>
+                                    <div class="card-body">Đơn Hàng Chưa Giao</div>
                                     <div class="center">
-                                            <h1><?php echo $TongSoLuongComment?></h1>
+                                            <h1><?php echo $TongDonHangChuaGiao?></h1>
                                         </div>   
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="comment.php">View Details</a>
+                                        <a class="small text-white stretched-link" href="DonDatHang.php">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -100,6 +102,10 @@
                                     </div>
                                     <div class="panel-body">
                                         <div class="list-group">
+                                            <a href="nhasanxuatlist.php" class="list-group-item">
+                                                <i class="fa fa-home"></i> Nhà sản xuất
+                                                <h4><?php echo $TongNhaSanXuat; ?></h4>
+                                            </a>
                                             <a href="productlist.php" class="list-group-item">
                                                 
                                                 <i class="fa fa-shopping-cart"></i> Sản phẩm trong cửa hàng
@@ -113,10 +119,10 @@
                                                 <i class="fa fa-fw fa-user"></i> Số khách hàng đăng ký tài khoản
                                                 <h4><?php echo $TongSoLuongKH; ?></h4>
                                             </a>
-                                            <a href="NhanVien.php" class="list-group-item">
+                                            <!-- <a href="NhanVien.php" class="list-group-item">
                                                 <i class="fa fa-fw fa-gear"></i> Số Tài khoản Admin
-                                                <h4><?php echo $TongSoLuongAdmin; ?></h4>
-                                            </a>
+                                                <h4><!?php echo $TongSoLuongAdmin; ?></h4>
+                                            </a> -->
                                             <a href="comment.php" class="list-group-item">
                                                 <i class="fa fa-comments"></i> Số bình luận khách hàng để lại
                                                 <h4><?php echo $TongSoLuongComment; ?></h4>

@@ -7,10 +7,15 @@
 <?php
     include 'include/nav.php';
 ?>
+<?php
+
+if(isset($_SESSION["MaKH"]))
+    echo "<script>location='products.php';</script>";
+?>
 <!--Style register -->
 <link rel="stylesheet" type="text/css" href="css/register.css" />
     <!--Style register -->
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -91,7 +96,7 @@
                     }
                     $.ajax
                     ({
-                        url: '../classes/registerAjax.php',
+                        url: '../../../classes/registerAjax.php',
                         type: 'post', //post và get
                         dataType: 'html',
                         data: {
@@ -111,7 +116,7 @@
                 });
         });
     </script>
-<div class="registers">
+            <div class="registers">
                 <div class="registers_title">
                     <h2>Đăng ký</h2>
                     <p>Nếu bạn chưa có tài khoản, điền các thông tin đăng ký tại đây</p>
@@ -120,7 +125,7 @@
                     <div class="register_col">
                         <div class="register_main">
                             <label>Họ và tên</label>
-                            <input autofocus="" name="fullName" class="fullName" id="fullName" type="text" placeholder="Nhập họ và tên của bạn" required="required">
+                            <input autofocus="" name="fullName" class="fullName" type="text" placeholder="Nhập họ và tên của bạn" required="required">
                         </div>
                     </div>
 					<div class="register_col">

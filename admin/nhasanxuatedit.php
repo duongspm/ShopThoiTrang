@@ -1,12 +1,18 @@
 <?php
-    include_once '../classes/nhasanxuat.php';
-    $nhasanxuat = new nhasanxuat();
-    if(!isset($_GET['NSXid']) || $_GET('NSXid')==NULL)
+    $conn = mysqli_connect("localhost","root","","shopthoitrang");
+    global $conn;
+    if(!isset($_POST["MaNSX"]))
+        //echo "<script>location='nhasanxuatedit.php';</script>";
+    $layDuLieu="SELECT * FROM nhasanxuat WHERE MaNSX = '".$_POST["MaNSX"]."'";
+    $truyvan_layDuLieu = mysqli_query($conn,$layDuLieu);
+    if(mysqli_num_rows($truyvan_layDuLieu)>0)
     {
-        echo "<script>window.location = 'nhasanxuat.php'</script>";
-    }else
+        $cot=mysqli_fetch_array($truyvan_layDuLieu);
+        //$cot = $truyvan_layDuLieu -> fetch_assoc();
+    }
+    else
     {
-        $id = $_GET['NSXid'];
+        //echo "<script>location='nhasanxuatedit.php';</script>";
     }
 ?>
 <!DOCTYPE html>
@@ -17,7 +23,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Sửa nhà sản xuất</title>
+        <title>Sửa Nhà Cung Cấp</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,60 +70,44 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Sửa nhà sản xuất</h1>
+                        <h1 class="mt-4">Sửa Nhà Cung Cấp</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Trang Chủ</a></li>
-                            <li class="breadcrumb-item active">Sửa nhà sản xuất</li>
+                            <li class="breadcrumb-item"><a href="nhasanxuatlist.php">Danh Sách Nhà Cung Cấp</a></li>
+                            <li class="breadcrumb-item active">Sửa Nhà Cung Cấp</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                            <!-- <?php
-                                $getNSX = $nhasanxuat->getNSXbyid($id);
-                                if($getNSX)
-                                {
-                                    while($result = $getNSX->fetch_assoc())
-                                    {
-                                     
-                            ?> -->
-                                <form action="nhasanxuat.php" method="post">
+                                <form method="POST" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
                                     <table >
                                         <tr>
-                                            <td width="167">Tên nhà sản xuất</td>
+                                            <td width="167">Tên Nhà Cung Cấp</td>
                                                 <td width="423">
-                                                <input value="<?php echo $result['TenNSX']?>" type="text" name="TenNSX" id="TenNSX" /> 
+                                                <input type="text" name="TenNSX" class="TenNSX" id="TenNSX"/> 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Địa chỉ</td>
-                                            <td><input value="<?php echo $result['DiaChiNSX']?>" type="text" name="DiaChiNSX" id="DiaChiNSX"/></td>
+                                            <td><input type="text" name="DiaChiNSX" id="DiaChiNSX"/></td>
                                         </tr>
                                         <tr>
                                             <td>Số điện thoại</td>
-                                            <td><input value="<?php echo $result['SDTNSX']?>" type="number" name="SDTNSX" id="SDTNSX"/> </td>
+                                            <td><input  type="number" name="SDTNSX" class="SDTNSX" id="SDTNSX"/> </td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
-                                            <td><input value="<?php echo $result['EmailNSX']?>" type="email" name="EmailNSX" id="EmailNSX"/> </td>
+                                            <td><input type="email" name="EmailNSX" id="EmailNSX"/> </td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td>
-                                                <input class="btn btn-success" type="submit" name="submit" value="Save">
+                                                <input id="Luu" type="submit" value="Lưu" class="btn btn-success button_insert ">
                                             </td>
                                         </tr>
                                     </table>
                                 </form>
-                                <?php
-                                    
-                                    }
-                                }
-                            ?>
                             </div>
                         </div>
-                        <?php if(isset($insertNSX))
-                        {
-                            echo $insertNSX;
-                        }?>
                         
                     </div>
                 </main>
@@ -127,5 +117,44 @@
         <?php include 'include/footeradmin.php' ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#Luu').click(function(e){
+                    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+                    var $SDTNSX = $('.SDTNSX').val();
+                    if (vnf_regex.test($SDTNSX) == false) 
+                        {
+                            alert('Số điện thoại không đúng định dạng!');
+                            return false;
+                        }
+                    });
+                });
+        </script>
+        <?php
+            if($_SERVER["REQUEST_METHOD"]=="POST") {
+                $TenNSX = $_POST["TenNSX"];
+                $DiaChiNSX = $_POST["DiaChiNSX"];
+                $SDTNSX = $_POST["SDTNSX"];
+                $EmailNSX = $_POST["EmailNSX"];
+                if($TenNSX==""||$DiaChiNSX==""||$EmailNSX=="")
+                {
+                    echo "<script>alert('Cập nhật đầy đủ thông tin!')</script>";
+                    return false;
+                }
+                $suaDuLieu="UPDATE nhasanxuat
+                            SET TenNSX='".$TenNSX."',DiaChiNSX='".$DiaChiNSX."',SDTNSX='".$SDTNSX.",EmailNSX='".$EmailNSX."'
+                            WHERE MaNSX='".$_GET["MaNSX"]."'";
+                if(mysqli_query($conn,$suaDuLieu))
+                {
+                    echo "<script>alert('Cập nhật thành công !')</script>";
+                    echo "<script>location='nhasanxuatlist.php';</script>";
+                }
+                else
+                {
+                    echo "<script>alert('Đã xảy ra lỗi !')</script>";
+                }
+                echo "<script>location='nhasanxuatlist.php?MaNSX=".$_GET["MaNSX"]."';</script>";
+            }
+        ?>
     </body>
 </html>

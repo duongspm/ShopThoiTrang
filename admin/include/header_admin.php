@@ -12,7 +12,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "shop";
+$dbname = "shopthoitrang";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 if(!$conn) {
 	die("Connection failed: ".mysqli_connect_error());
@@ -61,7 +61,7 @@ function DinhDangTien($dongia) //1000000
     return $sResult;
 }
 
-$soDDH=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM dondat WHERE TrangThai='0'"));
+$soDDH=mysqli_num_rows(mysqli_query($conn,"SELECT * FROM donhang WHERE TrangThai='0'"));
 
 ?>
 

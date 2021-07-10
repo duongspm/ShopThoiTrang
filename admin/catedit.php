@@ -1,12 +1,17 @@
 <?php
-    include_once '../classes/category.php';
-    $cat = new category();
-    if(!isset($_GET['catid']) || $_GET('catid')==NULL)
+    $conn = mysqli_connect("localhost","root","","shopthoitrang");
+    if(!isset($_POST["MaLoaiSP"]))
+        //echo "<script>location='cat.php';</script>";
+    $layDuLieu="SELECT * FROM loaisp WHERE MaLoaiSP = '".$_POST["MaLoaiSP"]."'";
+    $truyvan_layDuLieu = mysqli_query($conn,$layDuLieu);
+    if(mysqli_num_rows($truyvan_layDuLieu)>0)
     {
-        echo "<script>window.location = 'catadd.php'</script>";
-    }else
+        $cot=mysqli_fetch_array($truyvan_layDuLieu);
+        //$cot = $truyvan_layDuLieu -> fetch_assoc();
+    }
+    else
     {
-        $id = $_GET['catid'];
+        //echo "<script>location='cat.php';</script>";
     }
 ?>
 <!DOCTYPE html>
@@ -17,7 +22,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Danh mục loại sản phẩm</title>
+        <title>Sửa loại sản phẩm</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Latest compiled and minified CSS -->
@@ -75,38 +80,50 @@
                         <h1 class="mt-4">Sửa loại sản phẩm</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Trang Chủ</a></li>
+                            <li class="breadcrumb-item"><a href="cat.php">Danh sách loại sản phẩm</a></li>
+                            <li class="breadcrumb-item"><a href="catadd.php">Thêm loại sản phẩm</a></li>
                             <li class="breadcrumb-item active">Sửa loại sản phẩm</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
                             <?php
-                                $get_cat_name = $cat->getcatbyId($id);
-                                if($get_cat_name)
-                                {
-                                    while($result = $get_cat_name->fetch_assoc())
-                                    {
+                                // $get_cat_name = $cat->getcatbyId($id);
+                                // if($get_cat_name)
+                                // {
+                                //     while($result = $get_cat_name->fetch_assoc())
+                                //     {
                                      
                             ?>
-                                <form action="catadd.php" method="post" enctype="multipart/form-data">
+                                <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>" enctype="multipart/form-data">
                                     <table >
+                                        <?php
+                                            // $conn = mysqli_connect("localhost","root","","shop");
+                                            // if(!isset($_POST["MaLoai"]))
+                                             
+                                            // $layDuLieu="SELECT * FROM loaisanpham WHERE MaLoai = '".$_POST["MaLoai"]."'";
+                                            // $truyvan_layDuLieu = mysqli_query($conn,$layDuLieu);
+                                            // $cot=mysqli_fetch_array($truyvan_layDuLieu);
+                                        ?>
                                         <tr>
-                                            <td width="167">Tên loại sản phẩm</td>
-                                                <td width="423">
-                                                <input value="<?php echo $result['TenLoaiSP']?>" type="text" name="catName" id="catName" class="catName" /> 
+                                            <td>Tên loại sản phẩm</td>
+                                            <td>
+                                                <input type="text" name="catName" id="catName" /> 
+                                                (A | B)
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Hình ảnh loại sản phẩm</td>
-                                            <td><input value="<?php echo $result['HinhAnhLoaiSP']?>" type="file" name="catImage" id="catImage" class="catImage"/></td>
+                                           
+                                            <td><input type="file" name="catImage" id="catImage"/></td>
                                         </tr>
                                         <tr>
                                             <td>Mô tả loại sản phẩm</td>
-                                            <td><input value="<?php echo $result['ChuThichLoaiSP']?>" type="text" name="catDes" id="catDes" class="catDes"/> </td>
+                                            <td><input type="text" name="catDes" id="catDes"/></td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td>
-                                                <input type="submit" value="Thêm mới" class="btn btn-success button_insert ">
+                                                <input id="Luu" type="submit" value="Lưu" class="btn btn-success button_insert ">
                                                 <!-- <input  type="submit" value="Thêm" class="btn btn-block btn-info"> -->
                                             </td>
                                         </tr>
@@ -114,57 +131,11 @@
                                 </form>
                             <?php
                                     
-                                    }
-                                }
+                                //     }
+                                // }
                             ?>
                             </div>
                         </div>
-                        <div class="result"></div>
-                        <?php if(isset($insertCat))
-                        {
-                            echo $insertCat;
-                        }?>
-                        <!-- Danh sách loại sản phẩm-->
-                    <!-- <div class="block">
-                    <div class="block">
-                        <h2>Danh sách loại sản phẩm</h2>
-                        <form enctype="multipart/form-data">
-                        <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Mã</th>
-                                            <th>Tên loại sản phẩm</th>
-                                            <th>Mô tả</th>
-                                            <th>Hình ảnh</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        $show_cat = $cat->show_category();
-                                        if($show_cat)
-                                        {
-                                            $i = 0;
-                                            while ($result = $show_cat -> fetch_assoc())
-                                            {
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $result['MaLoai']?></td>
-                                            <td><?php echo $result['TenLoaiSP']?></td>
-                                            <td><?php echo $result['ChuThichLoaiSP']?></td>
-                                            <td><img src="images/<?php echo $result['HinhAnhLoaiSP']?>"></td>  
-                                            <td><a href="catedit.php?catid=<?php echo $result['MaLoai']?>" class="btn btn-success">Sửa</a></td>
-                                            <td><a href="?catid=<?php echo $result['MaLoai']?>" class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa thệc không ???')">Xóa</a></td>
-                                        </tr>
-                                    <?php
-                                            }
-                                        }
-                                    ?>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    </div> -->
-                    <!-- Danh sách loại sản phẩm-->
                     </div>
                 </main>
             </div>
@@ -172,5 +143,39 @@
         <?php include 'include/footeradmin.php' ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <?php
+            if($_SERVER["REQUEST_METHOD"]=="POST") {
+                $TenLoaiSP = $_POST["catName"];
+                $ChuThichLoaiSP = $_POST["catDes"];
+                $catImage=$cot["HinhAnhLoaiSP"];
+                if($TenLoaiSP==""||$ChuThichLoaiSP=="")
+                {
+                    echo "<script>alert('Cập nhật đầy đủ thông tin loại sản phẩm !')</script>";
+                    return false;
+                }
+                if($_FILES["catImage"]["name"]!="")
+                {
+                    unlink("../admin/products/".$catImage);
+                    $catImage=$_FILES["catImage"]["name"];
+                    move_uploaded_file($_FILES["catImage"]["tmp_name"],"../admin/products/".$catImage);
+                }
+                
+                global $conn;
+                $suaDuLieu="UPDATE loaisp
+                            SET TenLoai='".$TenLoaiSP."',MoTa='".$ChuThichLoaiSP."',HinhAnhLoaiSP='".$catImage."'
+                            WHERE MaLoaiSP='".$_GET["MaLoaiSP"]."'";
+                if(mysqli_query($conn,$suaDuLieu))
+                {
+                    echo "<script>alert('Cập nhật thành công !')</script>";
+                    echo "<script>location='cat.php';</script>";
+                }
+                else
+                {
+                    echo "<script>alert('Đã xảy ra lỗi !')</script>";
+                }
+                echo "<script>location='catedit.php?MaLoaiSP=".$_GET["MaLoaiSP"]."';</script>";
+            }
+
+            ?>
     </body>
 </html>

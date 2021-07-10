@@ -62,6 +62,7 @@
                         <h1 class="mt-4">Thêm sản phẩm</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Trang Chủ</a></li>
+                            <li class="breadcrumb-item"><a href="productlist.php">Danh sách sản phẩm</a></li>
                             <li class="breadcrumb-item active">Thêm sản phẩm</li>
                         </ol>
                         <div class="card mb-4">
@@ -95,15 +96,15 @@
                                             <td>
                                                 <select name="MaLoai" id="MaLoai" class="MaLoai">
                                                 <?php
-                                                    $conn = mysqli_connect("localhost","root","","shop");
-                                                    $sql = "SELECT * FROM loaisanpham";
+                                                    $conn = mysqli_connect("localhost","root","","shopthoitrang");
+                                                    $sql = "SELECT * FROM loaisp";
                                                     $old = mysqli_query($conn,$sql);
                                                  
                                                     
                                                         while($row = $old ->fetch_assoc())
                                                         {
-                                                            $MaLoai = intval ($row["MaLoai"]); 
-                                                            $TenLoaiSP = $row["TenLoaiSP"];
+                                                            $MaLoai = intval ($row["MaLoaiSP"]); 
+                                                            $TenLoaiSP = $row["TenLoai"];
                                                 ?>
                                                                 <option value="<?php echo($MaLoai); ?>">
                                                                 <?php echo($TenLoaiSP); ?>
@@ -120,7 +121,7 @@
                                             <td>
                                                 <select name="MaNSX" id="MaNSX" class="MaNSX">
                                                 <?php
-                                                    $conn = mysqli_connect("localhost","root","","shop");
+                                                    $conn = mysqli_connect("localhost","root","","shopthoitrang");
                                                     $sql = "SELECT * FROM nhasanxuat";
                                                     $old = mysqli_query($conn,$sql);
                                                 
@@ -140,7 +141,17 @@
                                         </tr>
                                         <tr>
                                             <td>Mô tả</td>
-                                            <td><input type="text" name="MoTaSP" id="MoTaSP"/> </td>
+                                            <td><textarea rows="4" type="text" name="MoTaSP" id="MoTaSP"></textarea> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Trạng thái</td>
+                                            <td>
+                                                <select name="TrangThai" id="TrangThai">
+                                                    <option value="0">Nổi bật</option>
+                                                    <option value="1">Không nổi bật nhưng đẹp</option>
+                                                </select>
+                                            </td>
+                                            <!-- <td><input type="text" id="TrangThai" name="TrangThai"> </td> -->
                                         </tr>
                                         <tr>
                                             <td></td>

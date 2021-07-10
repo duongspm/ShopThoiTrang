@@ -30,16 +30,16 @@
             }
             else
             {
-                $query = "SELECT * FROM admin WHERE username = '$adminUser' and password = '$adminPass' LIMIT 1"; //limit 1 là lấy ra 1 cái đúng thôi
+                $query = "SELECT * FROM nhanvien WHERE TenDangNhap = '$adminUser' and MatKhau = '$adminPass' LIMIT 1"; //limit 1 là lấy ra 1 cái đúng thôi
                 $result = $this->db->select($query);
 
                 if($result !=false)
                 {
                     $value = $result->fetch_assoc();
                     Session::set('adminlogin',true);
-                    Session::set('adminID',$value['id']);
-                    Session::set('adminUser',$value['username']);
-                    Session::set('adminName',$value['fullname']);
+                    Session::set('adminID',$value['MaNhanVien']);
+                    Session::set('adminUser',$value['TenDangNhap']);
+                    Session::set('adminName',$value['HoTen']);
                     //quay trở về trang
                     header('Location:index.php');
                 }else

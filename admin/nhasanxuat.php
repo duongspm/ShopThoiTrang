@@ -11,6 +11,23 @@
     }
     
 ?>
+<?php
+
+include "../admin/include/header_admin.php";
+
+if(isset($_GET["MaNSX"]))
+{
+    $xoaDuLieu="DELETE FROM nhasanxuat  WHERE MaNSX='".$_GET["MaNSX"]."'";
+    if(mysqli_query($conn,$xoaDuLieu))
+    {
+        echo "<script>alert('Xóa loại nhà Cung Cấp thành công !')</script>";
+    }
+    else
+    {
+        echo "<script>alert('Đã xảy ra lỗi !')</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,7 +36,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Quản lý nhà sản xuất</title>
+        <title>Quản Lý Nhà Cung Cấp</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -66,17 +83,18 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Quản lý nhà sản xuất</h1>
+                        <h1 class="mt-4">Quản Lý Nhà Cung Cấp</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Trang Chủ</a></li>
-                            <li class="breadcrumb-item active">Quản lý nhà sản xuất</li>
+                            <li class="breadcrumb-item"><a href="nhasanxuatlist.php">Danh Sách Nhà Cung Cấp</a></li>
+                            <li class="breadcrumb-item active">Quản Lý Nhà Cung Cấp</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
                                 <form action="nhasanxuat.php" method="post">
                                     <table >
                                         <tr>
-                                            <td width="167">Tên nhà sản xuất</td>
+                                            <td width="167">Tên nhà Cung Cấp</td>
                                                 <td width="423">
                                                 <input type="text" name="TenNSX" id="TenNSX" /> 
                                             </td>
@@ -87,7 +105,7 @@
                                         </tr>
                                         <tr>
                                             <td>Số điện thoại</td>
-                                            <td><input type="number" name="SDTNSX" id="SDTNSX"/> </td>
+                                            <td><input type="number" class="SDTNSX" name="SDTNSX" id="SDTNSX"/> </td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
@@ -96,7 +114,7 @@
                                         <tr>
                                             <td></td>
                                             <td>
-                                                <input class="btn btn-success" type="submit" name="submit" value="Save">
+                                                <input id="Luu" class="btn btn-success" type="submit" name="submit" value="Save">
                                             </td>
                                         </tr>
                                     </table>
@@ -107,47 +125,7 @@
                         {
                             echo $insertNSX;
                         }?>
-                        <!-- Danh sách loại sản phẩm-->
-                    <div class="block">
-                        <h2>Danh sách nhà sản xuất</h2>
-                        <form>
-                        <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Mã</th>
-                                            <th>Tên nhà sản xuất</th>
-                                            <th>Địa chỉ</th>
-                                            <th>SĐT</th>
-                                            <th>Email</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        $show = $nhasanxuat->show_nhasanxuat();
-                                        if($show)
-                                        {
-                                            $i = 0;
-                                            while ($result = $show -> fetch_assoc())
-                                            {
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $result['MaNSX']?></td>
-                                            <td><?php echo $result['TenNSX']?></td>
-                                            <td><?php echo $result['DiaChiNSX']?></td>
-                                            <td><?php echo $result['SDTNSX']?></td>
-                                            <td><?php echo $result['EmailNSX']?></td>
-                                            <td><a class="btn btn-success" href="nhasanxuatedit.php?NSXid=<?php echo $result['MaNSX']?>">Sửa</a></td>
-                                            <td><a class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa thệc không ???')">Xóa</a></td>
-                                        </tr>
-                                    <?php
-                                            }
-                                        }
-                                    ?>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    <!-- Danh sách loại sản phẩm-->
+                        
                     </div>
                 </main>
             </div>
@@ -156,5 +134,18 @@
         <?php include 'include/footeradmin.php' ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#Luu').click(function(e){
+                    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+                    var $SDTNSX = $('.SDTNSX').val();
+                    if (vnf_regex.test($SDTNSX) == false) 
+                        {
+                            alert('Số điện thoại không đúng định dạng!');
+                            return false;
+                        }
+                    });
+                });
+        </script>
     </body>
 </html>

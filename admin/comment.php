@@ -1,9 +1,9 @@
 <?php
     include "../admin/include/header_admin.php";
-    if(isset($_GET["MaComment"]))
+    if(isset($_GET["MaBinhLuan"]))
     {
         global $conn;
-        $xoaDuLieu="DELETE FROM comment  WHERE MaComment ='".$_GET["MaComment"]."'";
+        $xoaDuLieu="DELETE FROM binhluan  WHERE MaBinhLuan ='".$_GET["MaBinhLuan"]."'";
         if(mysqli_query($conn,$xoaDuLieu))
         {
             echo "<script>alert('Xóa bình luận thành công !')</script>";
@@ -13,6 +13,15 @@
             echo "<script>alert('Đã xảy ra lỗi !')</script>";
         }
     }
+    
+$dieukienTrang="";
+$trang=0;
+
+if(isset($_GET["trang"]))
+    $trang=$_GET["trang"];
+
+if (isset($_GET["noidung"]))
+    $dieukienTrang = $_GET["noidung"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,54 +71,78 @@
                         </div>
                         <!-- Danh sách loại sản phẩm-->
                         </div>
-                        <div  class="container-fluid px-4">
-                            <table class="table table-bordered table-hover">
-                                <tr>
-                                    <th>Tên khách hàng</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Thời gian bình luận</th>
-                                    <th>Nội dung</th>
-                                    <th></th>
-                                </tr>
-                                <?php
-                                    $layDuLieu="SELECT * FROM comment
-                                            INNER JOIN khachhang ON comment.MaKH=khachhang.MaKH
-                                            INNER JOIN sanpham ON comment.MaSP=sanpham.MaSP
-                                            ";
-                                    global $conn;
-                                    $truyvan_layDuLieu=mysqli_query($conn,$layDuLieu);
-                                while($cot=mysqli_fetch_array($truyvan_layDuLieu))
-                                {
-                                    ?>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Bình Luận Của Khách Hàng
+                            </div>
+                            <div  class="card-body" >
+                                <table id="datatablesSimple" >
+                                <thead>
+                                        <tr>
+                                            <th>Tên khách hàng</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Thời gian bình luận</th>
+                                            <th>Nội dung</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                    <tfoot>
                                     <tr>
-                                        <td><?php echo $cot["HoTenKH"];?></td>
-                                        <td><?php echo $cot["TenSP"];?></td>
-                                        <td><?php echo date("d/m/Y",strtotime($cot["ThoiGian"]));?></td>
+                                            <th>Tên khách hàng</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Thời gian bình luận</th>
+                                            <th>Nội dung</th>
+                                            <th></th>
+                                        </tr>
+                                        </tfoot>
+                                    <tbody>
+                                    <?php
+                                        $layDuLieu="SELECT * FROM binhluan
+                                                INNER JOIN thanhvien ON binhluan.TenDangNhap=ThanhVien.TenDangNhap
+                                                INNER JOIN sanpham ON binhluan.MaSanPham=sanpham.MaSanPham
+                                                ";
+                                        global $conn;
+                                        $truyvan_layDuLieu=mysqli_query($conn,$layDuLieu);
+                                    while($cot=mysqli_fetch_array($truyvan_layDuLieu))
+                                    {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $cot["HoTen"];?></td>
+                                            <td><?php echo $cot["TenSanPham"];?></td>
+                                            <td><?php echo date("d/m/Y",strtotime($cot["NgayBinhLuan"]));?></td>
 
-                                        <td>
-                                            <?php
-                                                if(strlen($cot["NoiDung"]) < 20 )
-                                                    echo $cot["NoiDung"];
-                                                else
-                                                    echo substr($cot["NoiDung"],0,20)."...";
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="comment_xem.php?MaComment=<?php echo $cot["MaComment"]; ?>" class="btn btn-success">Xem</a>
-                                            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?MaComment=<?php echo $cot["MaComment"]; ?>" class="XoaDuLieu btn btn-danger">Xóa</a>
-                                        </td>
-                                    </tr>
-                                <?php
-                                }
-                                ?>
-
-                            </table>
-                            <div class="divtrang"></div>
+                                            <td>
+                                                <?php
+                                                    if(strlen($cot["NoiDung"]) < 20 )
+                                                        echo $cot["NoiDung"];
+                                                    else
+                                                        echo substr($cot["NoiDung"],0,20)."...";
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <a href="comment_xem.php?MaBinhLuan=<?php echo $cot["MaBinhLuan"]; ?>" class="btn btn-success">Xem</a>
+                                                <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?MaBinhLuan=<?php echo $cot["MaBinhLuan"]; ?>" class="XoaDuLieu btn btn-danger">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                   </tbody>
+                                </table>
+                              
+                            </div>
                         </div>
                     </div>
-                    </div>
                 </main>
-                <script>
+                
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+        <script>
                     $(document).ready(function () {
                         <?php
                         echo  "$('.divtrang_".$trang."').addClass('divtrangactive');";
@@ -121,14 +154,9 @@
                         });
 
                         $('#btn-timkiem').click(function (){
-                            location="BinhLuan.php?noidung="+$('#txt-timkiem').val();
+                            location="comment.php?noidung="+$('#txt-timkiem').val();
                         });
                     });
                 </script>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-   
     </body>
 </html>

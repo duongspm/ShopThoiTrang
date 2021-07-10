@@ -2,6 +2,16 @@
     include_once '../classes/product.php';
     include_once '../helpers/format.php';
 ?>
+<?php
+    $pd = new product();
+    if(isset($_GET['productid']))
+    {
+        $id = $_GET['productid'];
+        $delproduct = $pd -> del_product($id);
+        echo "<script>alert('Xóa sản phẩm thành công !')</script>";
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -57,6 +67,7 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Trang Chủ</a></li>
                             <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+                            <li class="breadcrumb-item"><a href="productadd.php">Thêm sản phẩm</a></li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
@@ -77,7 +88,6 @@
                                             <th>Số lượng</th>
                                             <th>Hình ảnh</th>
                                             <th>Size</th>
-                                            <th>Màu sắc</th>
                                             <th>Loại sản phẩm</th>
                                             <th>Nhà sản xuất</th>
                                             <th>Mô tả</th>
@@ -107,19 +117,18 @@
                                                 while($result = $pdlist->fetch_assoc())
                                                 {
                                                     $i++;
-
                                         ?>
                                         <tr>
-                                            <td><?php echo $result['TenSP']?></td>
-                                            <td><?php echo $result['GiaSP']?></td>
-                                            <td><?php echo $result['SoLuongSP']?></td>
-                                            <td><img src="products/<?php echo $result['HinhAnhSP']?>" width="50"></td>
+                                            <td><?php echo $result['TenSanPham']?></td>
+                                            <td><?php echo $result['DonGia']?></td>
+                                            <td><?php echo $result['SoLuong']?></td>
+                                            <td><img src="products/<?php echo $result['Anh']?>" width="50"></td>
                                             <td><?php echo $result['Size']?></td>
-                                            <td><?php echo $result['MaLoai']?></td>
-                                            <td><?php echo $result['MaNSX']?></td>
-                                            <td><?php echo $fm->textShorten($result['MoTaSP'],50)?></td>
-                                            <td><a href="catedit.php?catid=<?php echo $result['MaLoai']?>" class="btn btn-success">Sửa</a></td>
-                                            <td><a href="?catid=<?php echo $result['MaLoai']?>" class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa thệc không ???')">Xóa</a></td>
+                                            <td><?php echo $result['TenLoai']?></td>
+                                            <td><?php echo $result['TenNSX']?></td>
+                                            <td><?php echo $fm->textShorten($result['ThongTin'],50)?></td>
+                                            <td><a href="productedit.php?productid=<?php echo $result['MaSanPham']?>" class="btn btn-success">Sửa</a></td>
+                                            <td><a href="?productid=<?php echo $result['MaSanPham']?>" class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa thệc không ???')">Xóa</a></td>
                                         </tr>
                                         <?php 
                                                 }
@@ -138,5 +147,13 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <!-- <script>
+            $(document).ready(function () {
+                $('.XoaDuLieu').click(function(){
+                    if(!confirm("Bạn có muốn xóa sản phẩm quan trọng này!"))
+                        return false;
+                });
+            });
+        </script> -->
     </body>
 </html>

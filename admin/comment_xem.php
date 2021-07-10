@@ -2,13 +2,13 @@
 
     include "../admin/include/header_admin.php";
 
-    if(!isset($_GET["MaComment"]))
+    if(!isset($_GET["MaBinhLuan"]))
         echo "<script>location='comment.php';</script>";
 
-    $layDuLieu="SELECT * FROM comment
-                    INNER JOIN khachhang ON comment.MaKH=khachhang.MaKH
-                    INNER JOIN sanpham ON comment.MaSP=sanpham.MaSP
-                    WHERE MaComment='".$_GET["MaComment"]."'";
+    $layDuLieu="SELECT * FROM binhluan
+                    INNER JOIN thanhvien ON binhluan.TenDangNhap=ThanhVien.TenDangNhap
+                    INNER JOIN sanpham ON binhluan.MaSanPham=sanpham.MaSanPham
+                    WHERE MaBinhLuan='".$_GET["MaBinhLuan"]."'";
     global $conn;
     $truyvan_layDuLieu=mysqli_query($conn,$layDuLieu);
     if(mysqli_num_rows($truyvan_layDuLieu)>0)
@@ -72,16 +72,16 @@
                                 <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
                                     <table class="table table-bordered">
                                         <tr>
-                                            <th>Tên khách hàng</th><td><input readonly class="form-control " value="<?php echo $cot["HoTenKH"]; ?>"> </td>
+                                            <th>Tên khách hàng</th><td><input readonly  value="<?php echo $cot["HoTen"]; ?>"> </td>
                                         </tr>
                                         <tr>
-                                            <th>Tên sản phẩm</th><td><input readonly class="form-control" value="<?php echo $cot["TenSP"]; ?>"> </td>
+                                            <th>Tên sản phẩm</th><td><input readonly value="<?php echo $cot["TenSanPham"]; ?>"> </td>
                                         </tr>
                                         <tr>
-                                            <th>Thời gian bình luận</th><td><input readonly class="form-control" value="<?php echo date("d/m/Y",strtotime($cot["ThoiGian"])); ?>"> </td>
+                                            <th>Thời gian bình luận</th><td><input readonly  value="<?php echo date("d/m/Y",strtotime($cot["NgayBinhLuan"])); ?>"> </td>
                                         </tr>
                                         <tr>
-                                            <th>Nội dung</th><td><textarea readonly rows="10" class="form-control" ><?php echo $cot["NoiDung"]; ?></textarea></td>
+                                            <th>Nội dung</th><td><textarea readonly rows="6"  ><?php echo $cot["NoiDung"]; ?></textarea></td>
                                         </tr>
                                         <tr>
                                             <th></th>
@@ -113,7 +113,7 @@
         <?php
         if($_SERVER["REQUEST_METHOD"]=="POST") {
                 global $conn;
-                $xoaDuLieu="DELETE FROM comment  WHERE MaComment='".$_GET["MaComment"]."'";
+                $xoaDuLieu="DELETE FROM binhluan  WHERE MaBinhLuan='".$_GET["MaBinhLuan"]."'";
                 if(mysqli_query($conn,$xoaDuLieu))
                 {
                     echo "<script>alert('Xóa bình luận thành công thành công !')</script>";
@@ -122,7 +122,7 @@
                 {
                     echo "<script>alert('Đã xảy ra lỗi !')</script>";
                 }
-            echo "<script>location='comment_xem.php?MaComment=".$_GET["MaComment"]."';</script>";
+            echo "<script>location='comment_xem.php?MaBinhLuan=".$_GET["MaBinhLuan"]."';</script>";
         }
 
         ?>

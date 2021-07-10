@@ -1,37 +1,49 @@
 <?php
-    include "../admin/include/header_admin.php";
-    if($_SERVER["REQUEST_METHOD"]=="POST") {
-        $catName = $_POST["catName"];
-        $catDes = $_POST["catDes"];
-        $catImage = $_POST["image"];
-        // $permited = array('jpg','jpeg','png','gif');
-        // $file_name = $_FILES['image']['name'];
-        // $file_size = $_FILES['image']['size'];
-        // $file_temp = $_FILES['image']['tmp_name'];
+    // include "../admin/include/header_admin.php";
+    // if($_SERVER["REQUEST_METHOD"]=="POST") {
+    //     $catName = $_POST["catName"];
+    //     $catDes = $_POST["catDes"];
+    //     $catImage = $_FILES["image"];
+    //     // $permited = array('jpg','jpeg','png','gif');
+    //     // $file_name = $_FILES['image']['name'];
+    //     // $file_size = $_FILES['image']['size'];
+    //     // $file_temp = $_FILES['image']['tmp_name'];
 
-        // $div = explode('.',$file_name);
-        // $file_ext = strtolower(end($div));
-        // $unique_image = substr(md5(time()),0,10).'.'.$file_ext;
-        // $uploaded_image = "products/".$unique_image;
-        // move_uploaded_file($file_temp,$uploaded_image);
-        // if($catImage["type"]!="image/jpeg" && $catImage["type"]!="image/png")
-        // {
-        //     echo "<script>alert('Hãy chọn đúng định dạng hình!')</script>";
-        //     return;
-        // }
-        //move_uploaded_file($catImage["tmp_name"],"../images/products/".$catImage["name"]);
-        $themDuLieu="INSERT INTO loaisanpham(TenLoaiSP,HinhAnhLoaiSP,ChuThichLoaiSP) VALUES ('".$catName."','".$catImage."','".$catDes."')";
-        if(mysqli_query($conn,$themDuLieu))
-        {
-            echo "<script>alert('Thêm loại sản phẩm thành công !')</script>";
-            echo "<script>location='cat.php';</script>";
-        }
-        else
-        {
-            echo "<script>alert('Đã xảy ra lỗi !')</script>";
-        }
+    //     // $div = explode('.',$file_name);
+    //     // $file_ext = strtolower(end($div));
+    //     // $unique_image = substr(md5(time()),0,10).'.'.$file_ext;
+    //     // $uploaded_image = "../images/products/".$unique_image;
+    //     // move_uploaded_file($file_temp,$uploaded_image);
+    //     // move_uploaded_file($file_temp,$uploaded_image);
+    //     if($catImage["type"]!="image/jpeg" && $catImage["type"]!="image/png")
+    //     {
+    //         echo "<script>alert('Hãy chọn đúng định dạng hình!')</script>";
+    //         return;
+    //     }
+    //     move_uploaded_file($catImage["tmp_name"],"../images/products/".$catImage["name"]);
+    //     $themDuLieu="INSERT INTO loaisanpham(TenLoaiSP,HinhAnhLoaiSP,ChuThichLoaiSP) VALUES ('".$catName."','".$catImage["name"]."','".$catDes."')";
+    //     if(mysqli_query($conn,$themDuLieu))
+    //     {
+    //         echo "<script>alert('Thêm loại sản phẩm thành công !')</script>";
+    //         echo "<script>location='cat.php';</script>";
+    //     }
+    //     else
+    //     {
+    //         echo "<script>alert('Đã xảy ra lỗi !')</script>";
+    //     }
+    // }
+
+?>
+<?php 
+    //include_once '../classes/nhasanxuat.php';
+    include_once '../classes/category.php';
+?>
+<?php
+    $cat = new category();
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']))
+    {
+        $insertCat = $cat->insert_category($_POST, $_FILES);
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +72,34 @@
     </head>
     <body class="sb-nav-fixed">
         <!-- Navbar -->
-        <?php include 'include/navbaradmin.php'?>
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.php">Staff Camper Store</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><strong></strong></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="?action=logout">Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
         <!-- Navbar -->
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -72,11 +111,11 @@
                         <h1 class="mt-4">Thêm loại sản phẩm</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Trang Chủ</a></li>
+                            <li class="breadcrumb-item"><a href="cat.php">Danh sách loại sản phẩm</a></li>
                             <li class="breadcrumb-item active">Thêm loại sản phẩm</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                            
                                 <form action="catadd.php" method="POST" enctype="multipart/form-data">
                                     <table >
                                         <tr>
@@ -95,12 +134,16 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td><input id="Luu" type="submit" value="Lưu" class="btn btn-primary"></td>
+                                            <td><input id="Luu" type="submit" value="Lưu" name="submit" class="btn btn-primary"></td>
                                         </tr>
                                     </table>
                                 </form>
                             </div>
                         </div>
+                        <?php if(isset($insertCat))
+                        {
+                            echo $insertCat;
+                        }?>
                     </div>
                 </main>
             </div>
@@ -108,7 +151,7 @@
         <?php include 'include/footeradmin.php' ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <script>
+        <!-- <script>
             $(document).ready(function(){
                 $('#Luu').click(function(){
                     catName=$('#catName').val();
@@ -127,6 +170,6 @@
                     }
                 });
             });
-        </script>
+        </script> -->
     </body>
 </html>

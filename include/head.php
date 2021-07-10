@@ -31,5 +31,18 @@
     <script type="text/javascript" src="js/Slider.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script type="text/javascript" src="../script/jsNguoiDung/simpleCart.min.js"> </script>
+    <link href="../css/cssNguoiDung/memenu.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="../script/jsNguoiDung/memenu.js"></script>
+    <script>$(document).ready(function(){$(".memenu").memenu();});</script>
+    <script type="text/javascript" src="../script/jsNguoiDung/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../script/jsNguoiDung/move-top.js"></script>
+    <script type="text/javascript" src="../script/jsNguoiDung/easing.js"></script>
+    <script type="text/javascript" src="../script/jsNguoiDung/jquery-1.11.0.min.js"></script>
+    <link href="../css/cssNguoiDung/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../css/cssNguoiDung/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="../script/jsNguoiDung/simpleCart.min.js"></script>
+
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     
 </head>

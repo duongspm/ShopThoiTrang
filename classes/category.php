@@ -12,37 +12,45 @@
             $this->db = new Database(); //gọi lại class database và truyền vào biến db
             $this->fm = new Format(); //class format trong folder helpers
         }
-        public function insert_category($catName, $catImage, $catDes)
+        public function insert_category($data,$files)
         {
-            $catName = $this->fm->validation($catName);//kiểm tra có ký tự đặc biệt hay khoản trắng có hợp lệ không
-            $catImage = $this->fm->validation($catImage);
-            $catDes = $this->fm->validation($catDes);
-
             //link là cái phần kết nối csdl
-            $catName = mysqli_real_escape_string($this->db->link, $catName);
-            $catImage = mysqli_real_escape_string($this->db->link, $catImage);
-            $catDes = mysqli_real_escape_string($this->db->link, $catDes);
+            $catName = mysqli_real_escape_string($this->db->link, $data['catName']);
+            //$catImage = mysqli_real_escape_string($this->db->link, $catImage);
+            $catDes = mysqli_real_escape_string($this->db->link, $data['catDes']);
 
-            if(empty($catName) || empty($catDes)|| empty($catImage))
+            $permited = array('jpg','jpeg','png','gif');
+            $file_name = $_FILES['image']['name'];
+            $file_size = $_FILES['image']['size'];
+            $file_temp = $_FILES['image']['tmp_name'];
+
+            $div = explode('.',$file_name);
+            $file_ext = strtolower(end($div));
+            $unique_image = substr(md5(time()),0,10).'.'.$file_ext;
+            $uploaded_image = "products/".$unique_image;
+
+            if(empty($catName) || empty($catDes))
             {
                 $alert = "<div class='alert alert-dark'>
-                                <strong>Thất bại!</strong> Thêm thất bại !Nhập đầy đủ thông tin.
+                                <strong>Thất bại!</strong> Thêm thất bại ! Nhập đầy đủ thông tin.
                             </div>";
                 return $alert;
             }
             else
             {
-                $sql = "SELECT * From loaisanpham where TenLoaiSP ='$catName' ";
+                $sql = "SELECT * From loaisp where TenLoai ='$catName' ";
                 $result = $this->db->insert($sql);
 
-                if($result>0)
+                if($result)
                 {
                     $alert = "<div class='alert alert-dark'>
                                     <strong>Thất bại!</strong> Thêm thất bại !Tên Loại sản phẩm đã tồn tại.
                                 </div>";
                     return $alert;
                 }else{
-                    $query = "INSERT INTO loaisanpham (`TenLoaiSP`, `HinhAnhLoaiSP`, `TrangThaiLoaiSP`, `ChuThichLoaiSP`) VALUES ('$catName','$catImage','1','$catDes' )"; //limit 1 là lấy ra 1 cái đúng thôi
+                    move_uploaded_file($file_temp,$uploaded_image);
+                    $query = "INSERT INTO loaisp (`TenLoai`, `MoTa`, `HinhAnhLoaiSP`) 
+                            VALUES ('$catName','$catDes','$unique_image' )"; //limit 1 là lấy ra 1 cái đúng thôi
                     $result = $this->db->insert($query);
                     $alert = "<div class='alert alert-success'>
                                     <strong>Thêm thành công!</strong> Thêm dữ liệu thành công.
@@ -53,13 +61,13 @@
         }
         public function show_category()
         {
-            $query = "SELECT * FROM loaisanpham ORDER BY MaLoai DESC"; //limit 1 là lấy ra 1 cái đúng thôi
+            $query = "SELECT * FROM loaisp ORDER BY MaLoaiSP DESC"; //limit 1 là lấy ra 1 cái đúng thôi
             $result = $this->db->select($query);
             return $result;
         }
         public function getcatbyId($id)
         {
-            $query = "SELECT * FROM loaisanpham where MaLoai = '$id' ";
+            $query = "SELECT * FROM loaisp where MaLoaiSP = '$id' ";
             $result = $this->db->select($query);
             return $result;
         }
@@ -85,7 +93,7 @@
             else
             {
                
-                 $query = "UPDATE loaisanpham set TenLoaiSP = '$catName',HinhAnhLoaiSP = '$catImage',ChuThichLoaiSP = '$catDes' WHERE MaLoai = '$id'"; //limit 1 là lấy ra 1 cái đúng thôi
+                 $query = "UPDATE loaisp set TenLoai = '$catName',HinhAnhLoaiSP = '$catImage',MoTa = '$catDes' WHERE MaLoaiSP = '$id'"; //limit 1 là lấy ra 1 cái đúng thôi
                     $result = $this->db->update($query);
                 if($result>0)
                 {
@@ -105,7 +113,7 @@
         }
         public function del_nhasanxuat($id)
         {
-            $query = "DELETE FROM loaisanpham where MaLoai ='$id'";
+            $query = "DELETE FROM loaisp where MaLoaiSP ='$id'";
             $result = $this -> db ->delete($query);
             if($result)
             {
