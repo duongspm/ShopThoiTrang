@@ -1,81 +1,82 @@
 <?php
-if(!isset($_GET["MaSP"]))
-    header("location: SanPham.php");
+    if(!isset($_GET["MaSP"]))
+        header("location: SanPham.php");
 
-include("../layout/header.php");
+    include("../layout/header.php");
 
-global $conn;
+    global $conn;
 
-$laySP="SELECT * FROM sanpham WHERE MaSanPham='".$_GET["MaSP"]."'";
-$truyvan_laySP=mysqli_query($conn,$laySP);
-$cot=mysqli_fetch_array($truyvan_laySP);
+    $laySP="SELECT * FROM sanpham WHERE MaSanPham='".$_GET["MaSP"]."'";
+    $truyvan_laySP=mysqli_query($conn,$laySP);
+    $cot=mysqli_fetch_array($truyvan_laySP);
 
-$laySanPhamLQ="SELECT * FROM sanpham WHERE MaLoaiSP='".$cot["MaLoaiSP"]."' and MaSanPham != '".$_GET["MaSP"]."' order by DonGia DESC LIMIT 0,6 ";
-$truyvan_laySanPhamLQ=mysqli_query($conn,$laySanPhamLQ);
+    $laySanPhamLQ="SELECT * FROM sanpham WHERE MaLoaiSP='".$cot["MaLoaiSP"]."' and MaSanPham != '".$_GET["MaSP"]."' order by DonGia DESC LIMIT 0,6 ";
+    $truyvan_laySanPhamLQ=mysqli_query($conn,$laySanPhamLQ);
 
-$layDG="SELECT * FROM danhgia WHERE MaSanPham='".$cot["MaSanPham"]."'";
-$truyvan_layDG=mysqli_query($conn,$layDG);
+    $layDG="SELECT * FROM danhgia WHERE MaSanPham='".$cot["MaSanPham"]."'";
+    $truyvan_layDG=mysqli_query($conn,$layDG);
 
-$tendangnhap="";
-$sosao="0";
-if(isset($_SESSION["tendangnhap"])) {
-    $tendangnhap = $_SESSION["tendangnhap"];
+    $tendangnhap="";
+    $sosao="0";
+    if(isset($_SESSION["tendangnhap"])) {
+        $tendangnhap = $_SESSION["tendangnhap"];
 
-    $layDG_ND="SELECT * FROM danhgia WHERE MaSanPham='".$cot["MaSanPham"]."' and TenDangNhap='".$tendangnhap."'";
-    $truyvanlayDG_ND=mysqli_query($conn,$layDG_ND);
+        $layDG_ND="SELECT * FROM danhgia WHERE MaSanPham='".$cot["MaSanPham"]."' and TenDangNhap='".$tendangnhap."'";
+        $truyvanlayDG_ND=mysqli_query($conn,$layDG_ND);
 
-    if(mysqli_num_rows($truyvanlayDG_ND)>0) {
-        $cotDG=mysqli_fetch_array($truyvanlayDG_ND);
-        $sosao = $cotDG["NoiDung"];
+        if(mysqli_num_rows($truyvanlayDG_ND)>0) {
+            $cotDG=mysqli_fetch_array($truyvanlayDG_ND);
+            $sosao = $cotDG["NoiDung"];
+        }
     }
-}
 
-//SELECT FROM binhluan INNER JOIN thanhvien ON binhluan.TenDangNhap=sanpham.TenDangNhap
+    //SELECT FROM binhluan INNER JOIN thanhvien ON binhluan.TenDangNhap=sanpham.TenDangNhap
 
-$layBinhLuan="SELECT *
-                  FROM binhluan INNER JOIN thanhvien
-                  ON binhluan.TenDangNhap=thanhvien.TenDangNhap
-                  WHERE MaSanPham='".$cot["MaSanPham"]."' ORDER BY MaBinhLuan DESC";
+    $layBinhLuan="SELECT *
+                    FROM binhluan INNER JOIN thanhvien
+                    ON binhluan.TenDangNhap=thanhvien.TenDangNhap
+                    WHERE MaSanPham='".$cot["MaSanPham"]."' ORDER BY MaBinhLuan DESC";
 
-$truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
-
+    $truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
 ?>
-<!--end-breadcrumbs-->
-<!--start-single-->
+
 <div class="single contact">
     <div class="container">
-        <div class="card">
-            <div class="container-fliud">
-                <div class="wrapper row">
-                    <!--Hình ảnh-->
-                    <div class="preview col-md-6">
-                        <div class="preview-pic tab-content">
-                            <div class="tab-pane active">  
-                                <img style="width: 100%;" src="../admin/products/<?php echo $cot["Anh"]; ?>">
-                            </div>
+        <div class="single-main">
+            <div class="col-md-9 single-main-left">
+                <div class="sngl-top">
+                    <div class="col-md-5 single-top-left">
+                        <div class="flexslider">
+                            <ul class="slides">
+                                <li data-thumb="../images/HinhSP/<?php echo $cot["Anh"]; ?>">
+                                    <img src="../images/HinhSP/<?php echo $cot["Anh"]; ?>" />
+                                </li>
+                                <li data-thumb="../images/HinhSP/<?php echo $cot["Anh2"]; ?>" >
+                                    <img src="../images/HinhSP/<?php echo $cot["Anh2"]; ?>" />
+                                </li>
+                                <li data-thumb="../images/HinhSP/<?php echo $cot["Anh3"]; ?>">
+                                    <img src="../images/HinhSP/<?php echo $cot["Anh3"]; ?>" />
+                                </li>
+                            </ul>
                         </div>
+                        <!-- FlexSlider -->
+                        <script defer src="../script/jsNguoiDung/jquery.flexslider.js"></script>
+                        <link rel="stylesheet" href="../css/cssNguoiDung/flexslider.css" type="text/css" media="screen" />
+
+                        <script>
+                            // Can also be used with $(document).ready()
+                            $(window).load(function() {
+                                $('.flexslider').flexslider({
+                                    animation: "slide",
+                                    controlNav: "thumbnails"
+                                });
+                            });
+                        </script>
                     </div>
-                    <div class="details col-md-6">
-                        <hr>
+                    <div class="col-md-7 single-top-right">
+                        <div class="details-left-info simpleCart_shelfItem">
                             <h3><?php echo $cot["TenSanPham"] ?></h3>
-                            <br>
-                            <!-- Mô tả -->
-                            <div id="accordion">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <a class="card-link" data-toggle="collapse" href="#collapseOne">
-                                        Mô tả sản phẩm  <i class='fas fa-align-center'></i>
-                                        </a>
-                                    </div>
-                                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <?php echo $cot['ThongTin'] ?>
-                                        </div>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
+
                             <ul class="saocha" >
                                 <li class="sao sao1" data-sao="1" onclick="DanhGiaSP(<?php echo $cot["MaSanPham"]; ?> , '<?php echo $tendangnhap; ?>' , 1)"></li>
                                 <li class="sao sao2" data-sao="2" onclick="DanhGiaSP(<?php echo $cot["MaSanPham"]; ?> , '<?php echo $tendangnhap; ?>' , 2)"></li>
@@ -85,24 +86,17 @@ $truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
                             </ul>
                             ( <?php echo mysqli_num_rows($truyvan_layDG) ?> đánh giá )
 
-                            <p class="availability">Trạng thái: 
-                                <span style="color: red;">
-                                    <?php
-                                        if($cot["TrangThai"]==1)
-                                            echo "Nổi bật";
-                                        else echo "Không nổi bật nhưng đẹp";
-                                    ?>
-                                </span>
-                            </p>
-                            
-                            <hr>
-                            <div>
-                                <h5>Size: <?php echo $cot['Size']?></h5>
+                            <p class="availability">Trạng thái: <span class="color"><?php echo $cot["TrangThai"]; ?></span></p>
+                            <div class="price_single">
+                                <span class="actual item_price"><?php echo DinhDangTien($cot["DonGia"]); ?></span>
                             </div>
-                            <hr>
+                            <h2 class="quick">Thông tin sản phẩm: </h2>
+                            <p class="quick_desc">
+                                <?php echo $cot["ThongTin"]; ?>
+                            </p>
                             <div class="quantity_box">
                                 <ul class="product-qty">
-                                    <span>Số lượng</span>
+                                    <span>Số lượng đặt:</span>
                                     <select id="soluongdat">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -113,36 +107,18 @@ $truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
                                     </select>
                                 </ul>
                             </div>
-                            <hr>
-                            <div class="price_single">
-                                <span style="background-color: #57C5A0; color:#fff; padding: 24px 6px;bottom: 0px;left: 10px;">GIÁ BÁN: <?php echo DinhDangTien($cot["DonGia"]); ?></span>
-                            </div>
-                            <hr>
                             <div class="clearfix"> </div>
                             <div class="single-but item_add">
                                 <input type="submit" value="Thêm giỏ hàng" onclick="ThemGioHang(<?php echo $cot["MaSanPham"]; ?>,$('#soluongdat').val())"/>
                             </div>
-                       
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <h4><i class='fas fa-shipping-fast' style='font-size:24px'></i><strong>	 HỖ TRỢ GIAO HÀNG VỚI HOÁ ĐƠN TRÊN 150.000 VNĐ</strong></h4>
-		<br>
-		<!-- chia sẻ -->
-		<div>
-			<span>Chia sẻ sản phẩm này: </span>
-			<ul class="nav">
-				<li><a href="//www.facebook.com/sharer.php?u=http://localhost:8080/ShopThoiTrang_PHP/product-detail.php?action=&id=<?php echo $cot['MaSanPham'];?>#" data-toggle="tooltip" title="Facebook"><i class='fab fa-facebook-f'></i></a></li>
-				<li><a href="//twitter.com/share?text=<?php echo $cot['TenSanPham']; ?>;url=http://localhost:8080/ShopThoiTrang_PHP/product-detail.php?action=&id=<?php echo $cot['MaSanPham'];?>#" data-toggle="tooltip" title="Twitter"><i class='fab fa-google-wallet'></i></a></li>
-				<li><a href="//plus.google.com/share?url=http://localhost:8080/ShopThoiTrang_PHP/product-detail.php?action=&id=<?php echo $cot['MaSanPham'];?>#" data-toggle="tooltip" title="Google+"><i class='fab fa-google-plus-g'></i></a></li>
-				<li><a href="//pinterest.com/pin/create/button/?url=http://localhost:8080/ShopThoiTrang_PHP/product-detail.php?action=&id=<?php echo $cot['MaSanPham'];?>#" data-toggle="tooltip" title="Pinterest"><i class='fab fa-pinterest'></i></a></li>
-			</ul>
-		</div>
-		<!-- chia sẻ -->
                 <hr>
 
-                <h4>Bình luận về sản phẩm:</h4>
-                <br>
+                <h4>Bình luận sản phẩm:</h4>
+
                 <?php if(isset($_SESSION["tendangnhap"])) {?>
                     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>?MaSP=<?php echo $cot["MaSanPham"]; ?>">
                         <textarea name="ndbinhluan" id="ndbinhluan" class="form-control" rows="4" placeholder="Nhập nội dung bình luận..."></textarea>
@@ -150,9 +126,7 @@ $truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
                             <input id="btn-binhluan" type="submit" value="Bình luận" >
                         </div>
                     </form>
-                <?php }else { echo "<div class='alert alert-warning'>
-                                        <strong>Thông báo!</strong> Bạn phải đăng nhập để có thể để lại bình luận về sản phẩm
-                                    </div>";} ?>
+                <?php }else { echo "Bạn hãy đăng nhập để bình luận sản phẩm này.";} ?>
 
                 <?php while($cotBL=mysqli_fetch_array($truyvan_layBinhLuan)) {?>
 
@@ -167,17 +141,19 @@ $truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
                         <?php }else{ if(isset($_SESSION["admin"])){  ?>
                             <span class="glyphicon glyphicon-remove bl_iconxoa" onclick="XoaBinhLuan(<?php echo $cotBL["MaBinhLuan"]; ?>,<?php echo $cot["MaSanPham"]; ?>)"></span>
                         <?php } } ?>
+
                         <input id="bl_mabinhluan" type="hidden" value="<?php echo $cotBL["MaBinhLuan"]; ?>">
                         <input id="bl_noidung" type="hidden" value="<?php echo $cotBL["NoiDung"]; ?>">
                         <div class="bl_noidung">
                             <?php echo $cotBL["NoiDung"]; ?>
                         </div>
                     </div>
+
+
                 <?php } ?>
+
                 <hr>
-                <br>
                 <h3 style="text-align: center;">Sản phẩm liên quan</h3>	
-                <hr/>
                 <div class="latest products">
                     <div class="product-one">
                         <div class="col-md-12 p-left">
@@ -190,24 +166,29 @@ $truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
                                 ?>
                                 <div class="product-one">
                                     <div class="col-md-4 product-left single-left">
-                                        <div>
+                                        <div >
+
                                             <a href="ChiTietSanPham.php?MaSP=<?php echo $cot["MaSanPham"]; ?>" >  <!-- link chi tiet san pham -->
 
                                                 <img height="250" src="../admin/products/<?php echo $cot["Anh"] ?>" alt="" />
                                                 <div class="mask mask1">
-                                                    <span>Xem chi tiết</span>
+                                                    <span class="button">Xem chi tiết</span>
                                                 </div>
                                             </a>
                                             <h4><?php echo $cot["TenSanPham"] ?></h4>
                                             <p><a class="item_add" href="#"><span class=" item_price"> <?php echo DinhDangTien($cot["DonGia"]); ?> VNĐ</span></a></p>
                                         </div>
                                     </div>
+
                                 </div>
+
+
                                 <?php if($i%3==0) {?>
+
                                 <div class="clearfix"> </div>
 
                             <?php
-                                }
+                            }
                             }
                             ?>
                             <div class="divtrang"></div>
@@ -216,8 +197,6 @@ $truyvan_layBinhLuan=mysqli_query($conn,$layBinhLuan);
                 </div>
 
             </div>
-            <!-- phan danh muc -->
-            
             <div class="clearfix"> </div>
         </div>
     </div>
@@ -234,7 +213,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
     $themBinhLuan="INSERT INTO binhluan(TenDangNhap,MaSanPham,NgayBinhLuan,NoiDung) VALUES ('".$tendangnhap."','".$masp."','".$ngaybinhluan."','".$ndbinhluan."')";
     if(mysqli_query($conn,$themBinhLuan))
     {
-        echo "<script>alert('Bình luận thành công Bình luận sản phẩm thành công Cám ơn bạn đã góp ý về sản phẩm Bình luận của bạn sẻ được lưu lại.');window.location='ChiTietSanPham.php?MaSP=".$masp."'</script>";
+        echo "<script>alert('Bình luận thành công');window.location='ChiTietSanPham.php?MaSP=".$masp."'</script>";
     }
     else{
         echo "<script>alert('Đã có lỗi xảy ra');</script>";
@@ -295,7 +274,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
             <div >
                 <span style="color: red;" id="bl_thongbao"></span> <br>
-                <input id="Luu-bl" name="Luu-bl" type="button" value="Lưu" class="btn btn-success Luu-bl my3">
+                <input id="Luu-bl" type="button" value="Lưu" class="btn btn-primary">
             </div>
             <script>
                 $(document).ready(function(){
@@ -325,5 +304,5 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 </div>
 
 <?php
-    include_once "../layout/footer.php";?>
-
+    include_once "../include/footer.php";
+?>

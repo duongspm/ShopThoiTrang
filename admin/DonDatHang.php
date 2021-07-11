@@ -5,13 +5,11 @@
     if(isset($_GET["trang"]))
         $trang=$_GET["trang"];
 
-    // $select="dondat.* , thanhvien.HoTen  hotentv , nhanvien.HoTen  hotennv ";
-    // $from="dondat INNER JOIN thanhvien ON dondat.TenDangNhap=thanhvien.TenDangNhap
-    //                 INNER JOIN nhanvien ON dondat.MaNhanVien=nhanvien.MaNhanVien";
-    $select="dondat.* , thanhvien.HoTen hotentv";
-    $from="dondat INNER JOIN thanhvien ON dondat.TenDangNhap=thanhvien.TenDangNhap ORDER BY dondat.MaDonDat DESC";
+    $select="dondat.* , thanhvien.HoTen  hotentv , nhanvien.HoTen  hotennv";
+    $from="dondat INNER JOIN thanhvien ON dondat.TenDangNhap=thanhvien.TenDangNhap
+                    INNER JOIN nhanvien ON dondat.MaNhanVien=nhanvien.MaNhanVien";
 
-    $layDuLieu=phan_trang($select,$from,"",50,$trang,"");
+    $layDuLieu=phan_trang($select,$from,"",10,$trang,"");
 
     $truyvan_layDuLieu=$layDuLieu;
 
@@ -105,9 +103,9 @@
                                             <!---Trạng thái -->
                                             <td>
                                                 <?php if(trim($cot["TrangThai"])==0){
-                                                    echo "<span class='text-danger'>Chưa giao hàng (Chắc nhân viên lười)</span>";
+                                                    echo "<span class='text-danger'>Chưa giao hàng</span>";
                                                 }else{
-                                                    echo "<span class='text-success'>Đã giao hàng rồi nha</span>";
+                                                    echo "<span class='text-success'>Đã giao rồi</span>";
                                                 } ?>
                                             </td>
                                             <td><?php echo $cot["NoiGiao"];?></td>

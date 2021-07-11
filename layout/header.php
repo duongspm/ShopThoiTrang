@@ -14,8 +14,7 @@
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Free Style Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    <meta name="keywords" content="Quần, áo, thời trang, sản phẩm, streetwear, boostrap, php, lập trình web, thiết kế web" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!--fonts-->
     <link href='//fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,300,400,500,700,800,900,100italic,300italic,400italic,500italic,700italic,800italic,900italic' rel='stylesheet' type='text/css'>
@@ -31,6 +30,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
         });
     </script>
+    <!-- start menu -->
+    <script src="../script/jsNguoiDung/simpleCart.min.js"> </script>
+    <link href="../css/cssNguoiDung/memenu.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="../script/jsNguoiDung/memenu.js"></script>
+    <script>$(document).ready(function(){$(".memenu").memenu();});</script>
     <!-- camper store -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -43,13 +47,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="../css/style7.css" rel="stylesheet" type="text/css" media="all" />
 	<link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="../css/login.css" rel="stylesheet" type="text/css" media="all" />
-    <!-- start menu -->
-    <script src="../script/jsNguoiDung/simpleCart.min.js"> </script>
-    <link href="../css/cssNguoiDung/memenu.css" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="../script/jsNguoiDung/memenu.js"></script>
-    <script>$(document).ready(function(){$(".memenu").memenu();});</script>
-
-    <?php
+    <!-- font-awesome-icons -->
+	<link href="../css/font-awesome.css" rel="stylesheet">
+	<!-- //font-awesome-icons -->
+    <link href="//fonts.googleapis.com/css?family=Montserrat:100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+	    rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+    <!-- camper store -->
+<?php
     session_start();
 	$servername = "localhost";
 	$username = "root";
@@ -106,10 +111,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         return $sResult;
     }
 
-    ?>
+?>
 </head>
 <body>
-<?php include_once "../include/header.php";?>
+<?php include_once "../include/header.php"?>
 <!--top-header-->
 <div class="top-header">
     <div class="container">
@@ -117,9 +122,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="col-md-4 top-header-left">
                 <div class="search-bar">
                     <form method="post" action="TimKiemSanPham.php">
-                        <input name="tkTenSP" type="text" placeholder="Nhập tên sản phẩm...">
-                        <input type="submit" value="">
-                        <button class="btn btn-success">Tìm kiếm</button>
+                        <input class="form-control mr-sm-2" name="tkTenSP" type="text" placeholder="Nhập tên sản phẩm...">
+                        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value=""><button class="btn btn-outline-success my-2 my-sm-0" name= "tkTenSP" type="text">Search</button>
                     </form>
                 </div>
             </div>
@@ -145,6 +149,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <span > <?php echo DinhDangTien($tongtien); ?> VNĐ </span> (<span id="simpleCart_quantity" > <?php echo $tongsp; ?> </span> SP)</div>
                                 <img src="../images/cart-1.png" alt="" />
                         </a>
+                        <span>||</span>
                         <p><a href="SanPham.php?moiGH=0" class="simpleCart_empty">Làm mới</a></p>
                         <div class="clearfix"> </div>
                     </div>
@@ -173,9 +178,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="header-bottom">
     <div class="container">
         <div class="top-nav">
-            <ul class="memenu skyblue"><li class="active"><a href="index.php">Trang chủ</a></li>
-                <li ><a href="about.php">Giới thiệu</a></li>
-                <li class="grid"><a>Sản phẩm</a>
+            <ul class="memenu skyblue" style="color: #008cba;">
+                <li><a href="index.php">Trang chủ</a></li>
+                <!-- <li ><a href="SanPham.php">Sản Phẩm</a></li> -->
+                <li class="grid"><a href="SanPham.php">Sản phẩm</a>
                     <div class="mepanel">
                         <div class="row">
                             <div class="col1 me-one">
@@ -193,18 +199,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     ?>
                                 </ul>
                             </div>
+                            <!-- <div class="col1 me-one">
+                                <h4>Giá</h4>
+                                <ul>
+                                    <li><a href="DanhMucSanPham.php?gia=100000">Dưới 100.000</a></li>
+                                    <li><a href="DanhMucSanPham.php?gia=200000">Dưới 200.000</a></li>
+                                    <li><a href="DanhMucSanPham.php?gia=300000">Dưới 300.000</a></li>
+                                    <li><a href="DanhMucSanPham.php?gia=400000">Dưới 400.000</a></li>
+                                </ul>
+                                </div> -->
                         </div>
                     </div>
                 </li>
+                <li ><a href="about.php">Giới Thiệu</a></li>
+                            
                 <?php if(!isset($_SESSION["tendangnhap"])) { ?>
 
                     <li ><a href="DangKy.php">Đăng ký</a></li>
-                    <li ><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Đăng nhập</a></li>
+                    <li ><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"><i class='fas fa-user-circle' style='font-size:36px'></i></a></li>
 
                 <?php }else{ ?>
                     <li ><a href="ThongTinTaiKhoan.php"><span style="text-transform:none">Xin chào <?php echo $_SESSION["tendangnhap"]; ?></span></a> <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?dx=0"> Đăng xuất</a></li>
                 <?php } ?>
+              
             </ul>
+            
         </div>
         <div class="clearfix"> </div>
     </div>
@@ -216,27 +235,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <form method="post" action="DangNhap.php">
                     <input type="hidden" name="tranghientai" value="<?php echo $_SERVER["PHP_SELF"]; ?>">
                     <div class="account-top heading">
-                        <h3>Đăng nhập</h3>
-                        <p>Nếu bạn đã có tài khoản, đăng nhập tại đây</p>
+                        <div class="logins_title">
+                            <h2>Đăng nhập</h2>
+                            <p>Nếu bạn đã có tài khoản, đăng nhập tại đây</p>
+                        </div>
                     </div>
+                    <br>
                     <div class="address">
-                        <span>Tên đăng đăng nhập</span>
+                        <label>Tên đăng đăng nhập</label>
                         <input id="dn_tendangnhap" name="tendangnhap" type="text">
                     </div>
                     <div class="address">
-                        <span>Mật khẩu</span>
+                        <label>Mật khẩu</label>
                         <input id="dn_matkhau" name="matkhau" type="password">
+                    </div>
+                    <div class="login_col">
+                        <div class="login_main">
+                            <div class="login_main_bottom">
+                                <p>Bạn quên mật khẩu? Lấy lại mật khẩu</p>
+                                <a class="forgot" href="QuenMatKhau.php">Tại đây</a>
+                                <!-- <input id="dangnhap" type="submit" value="Đăng nhập"> -->
+                            </div>
+                        </div>
                     </div>
                     <div class="address">
                         <span style="color: red;" id="dn_thongbao"></span>
-                        <a class="forgot" href="../page/QuenMatKhau.php">Quên mật khẩu?</a>
+                        <!-- <a class="forgot" href="../page/QuenMatKhau.php">Quên mật khẩu?</a> -->
                         <input id="dangnhap" type="submit" value="Đăng nhập">
                     </div>
-                    <br>
                     <div class="login_main">
                         <div class="login_main_bottom">
                             <span>Bạn chưa có tài khoản?</span>
-                            <a href="DangKy.php">Đăng ký</a>
+                            <a href="register.php">Đăng ký</a>
                         </div>
                     </div>
                     <div class="login_col">

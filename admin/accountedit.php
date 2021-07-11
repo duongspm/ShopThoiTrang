@@ -4,7 +4,7 @@
     global $conn;
 
     if(!isset($_GET["MaNhanVien"]))
-        echo "<script>location='account.php';</script>";
+        // echo "<script>location='account.php';</script>";
     
     $layDuLieu="SELECT * FROM nhanvien WHERE MaNhanVien='".$_GET["MaNhanVien"]."'";
     $truyvan_layDuLieu=mysqli_query($conn,$layDuLieu);
@@ -14,7 +14,7 @@
     }
     else
     {
-        echo "<script>location='account.php';</script>";
+        //echo "<script>location='account.php';</script>";
     }
 
 ?>

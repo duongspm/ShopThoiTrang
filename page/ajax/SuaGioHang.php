@@ -42,7 +42,7 @@ foreach($_SESSION["giohang"] as $cotGH)
     ?>
     <ul class="cart-header">
         <div class="close1" onclick="XoaGioHang(<?php echo $cotGH["masp"] ?>)"> </div>
-        <li class="ring-in"><a href="ChiTietSanPham.php?MaSP=<?php echo $cotGH["masp"]; ?>" ><img width="100"  src="../images/hinhsp/<?php echo $cotGH["hinhsp"]; ?>" class="img-responsive" alt=""></a>
+        <li class="ring-in"><a href="ChiTietSanPham.php?MaSP=<?php echo $cotGH["masp"]; ?>" ><img width="100"  src="../admin/products/<?php echo $cotGH["hinhsp"]; ?>" class="img-responsive" alt=""></a>
         </li>
         <li><span><?php echo $cotGH["tensp"]; ?></span></li>
         <li>

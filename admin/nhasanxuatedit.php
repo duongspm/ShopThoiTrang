@@ -2,7 +2,7 @@
     $conn = mysqli_connect("localhost","root","","shopthoitrang");
     global $conn;
     if(!isset($_POST["MaNSX"]))
-        //echo "<script>location='nhasanxuatedit.php';</script>";
+        //echo "<script>location='cat.php';</script>";
     $layDuLieu="SELECT * FROM nhasanxuat WHERE MaNSX = '".$_POST["MaNSX"]."'";
     $truyvan_layDuLieu = mysqli_query($conn,$layDuLieu);
     if(mysqli_num_rows($truyvan_layDuLieu)>0)
@@ -12,7 +12,7 @@
     }
     else
     {
-        //echo "<script>location='nhasanxuatedit.php';</script>";
+        //echo "<script>location='cat.php';</script>";
     }
 ?>
 <!DOCTYPE html>

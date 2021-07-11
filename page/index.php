@@ -1,6 +1,7 @@
+
 <?php
     include("../layout/header.php");
-
+    // include_once "../layout/header.php";
     global $conn;
 
     $laySPcao1="SELECT * FROM sanpham ORDER BY DonGia DESC LIMIT 0,1";
@@ -11,76 +12,61 @@
     $truyvan_laySPcao2=mysqli_query($conn,$laySPcao2);
     $cot2=mysqli_fetch_array($truyvan_laySPcao2);
 
-    $laySP="SELECT * FROM sanpham ORDER BY SoLuong DESC LIMIT 0,8";
+    $laySP="SELECT * FROM sanpham ORDER BY SoLuong DESC";
     $truyvan_laySP=mysqli_query($conn,$laySP);
 
 ?>
-
-<!--banner-ends-->
+<?php include_once "../include/slider.php";?>
 <!--Slider-Starts-Here-->
-<script src="../script/jsNguoiDung/responsiveslides.min.js"></script>
-<script>
-    // You can also use "$(window).load(function() {"
-    $(function () {
-        // Slideshow 4
-        $("#slider4").responsiveSlides({
-            auto: true,
-            pager: true,
-            nav: false,
-            speed: 500,
-            namespace: "callbacks",
-            before: function () {
-                $('.events').append("<li>before event fired.</li>");
-            },
-            after: function () {
-                $('.events').append("<li>after event fired.</li>");
-            }
-        });
-
-    });
-</script>
 <!--End-slider-script-->
-<?php include_once "../include/slider.php"; ?>
-<!--start-banner-bottom-->
-
-<!--end-banner-bottom-->
 <!--start-shoes-->
-<div class="shoes">
-    <div class="container">
-        <div class="product-one"></div>
-
-            <?php
-            $i=0;
-            while($cot=mysqli_fetch_array($truyvan_laySP))
-                {
-                    $i++;
-                ?>
-        <div class="product-one">
-            <div class="col-md-3 product-left">
-                <div>
-                    <a href="ChiTietSanPham.php?MaSP=<?php echo $cot["MaSanPham"]; ?>">
-                        <img height="250" src="../admin/products/<?php echo $cot["Anh"]; ?>" alt="" />
-                        <div class="mask">
-                            <span>Xem chi tiết</span>
+<?php
+    $trang=0;
+    if(isset($_GET["trang"]))
+        $trang=$_GET["trang"];
+    $laysp=phan_trang("*","sanpham","",6,$trang,"");
+    $truyvan_laysp=$laysp;
+?>
+<div class="product">
+		<div class="container">
+			<div class="product-main">
+                <!--  phan danh sach san pham -->
+                <div class="col-md-9 p-left">
+            <div class="clearfix"> </div>
+                <?php
+                $i=0;
+                while($cot=mysqli_fetch_array($truyvan_laySP))
+                    {
+                        $i++;
+                    ?>
+                <div class="product-one">
+                    <div class="col-md-4 product-left single-left">
+                        <div>
+                            <a href="ChiTietSanPham.php?MaSP=<?php echo $cot["MaSanPham"]; ?>">
+                                <img height="250" src="../admin/products/<?php echo $cot["Anh"]; ?>" alt="" />
+                                <div class="mask mask1">
+                                    <span>Xem chi tiết</span>
+                                </div>
+                            </a>
+                        
+                                <h3><?php echo $cot["TenSanPham"]; ?></h3>
+                                <p style="background-color: #57C5A0"><a class="item_add" href="#"><i></i> <span class=" item_price"> <?php echo DinhDangTien($cot["DonGia"]); ?> VNĐ</span></a></p>
                         </div>
-                    </a>
-                    <h4><?php echo $cot["TenSanPham"]; ?></h4>
-                    <p><a class="item_add" href="#"><i></i> <span class=" item_price"> <?php echo DinhDangTien($cot["DonGia"]); ?> VNĐ</span></a></p>
-
+                    </div>
                 </div>
+                    <?php
+                        if($i%4==0)
+                        { 
+                    ?>
+                    <div class="clearfix"></div>
+                    <?php
+                        }
+                    }
+                ?>
             </div>
         </div>
-            <?php
-                    if($i%4==0)
-                    { ?>
-                    <div class="clearfix"></div>
-                <?php
-                    }
-                }
-            ?>
     </div>
 </div>
-<!--end-shoes-->
 <?php
-include("../include/footer.php");
+    include_once "../include/footer.php";
 ?>

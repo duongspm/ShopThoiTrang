@@ -24,26 +24,16 @@
 ?>
 
 	<!--start-breadcrumbs-->
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="" role="tab"
-                    aria-controls="pills-home" aria-selected="true">Tất cả sản phẩm</a>
-            </li>
-            <?php
-                global $conn;
-                $layLoaiSP="SELECT * FROM loaisp";
-                $truyvan_layLoaiSP=mysqli_query($conn,$layLoaiSP);
-                while($cot=mysqli_fetch_array($truyvan_layLoaiSP))
-                {
-            ?>
-            <li id= "value" class="nav-item">
-                <a href="DanhMucSanPham.php?loaisp=<?php echo $cot["MaLoaiSP"] ?>" role="tab"
-                    aria-controls="pills-profile" aria-selected="false"><?php echo $cot['TenLoai']?></a>
-                </li>
-            <?php
-                }
-            ?>
-        </ul>
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="breadcrumbs-main">
+				<ol class="breadcrumb">
+					<li><a href="index.php">Trang Chủ</a></li>
+					<li class="active">Danh mục sản phẩm</li>
+				</ol>
+			</div>
+		</div>
+	</div>
 	<!--end-breadcrumbs-->
 	<!--start-product--> 
 	<div class="product">
@@ -61,9 +51,11 @@
                     ?>
 				    <div class="product-one">
                         <div class="col-md-4 product-left single-left">
-                            <div >
+                            <div class="p-one simpleCart_shelfItem">
+
                                 <a href="ChiTietSanPham.php?MaSP=<?php echo $cot["MaSanPham"]; ?>" >  <!-- link chi tiet san pham -->
-                                    <img height="250" src="../admin/products/<?php echo $cot["Anh"] ?>" alt="" />
+
+                                    <img height="250" src="../images/HinhSP/<?php echo $cot["Anh"] ?>" alt="" />
                                     <div class="mask mask1">
                                         <span>Xem chi tiết</span>
                                     </div>
@@ -74,6 +66,8 @@
                         </div>
 
                     </div>
+
+
                     <?php if($i%3==0) {?>
 
                     <div class="clearfix"> </div>
@@ -84,6 +78,31 @@
                     ?>
                         <div class="divtrang"></div>
 			    </div>
+
+                <!-- phan danh muc -->
+			<div class="col-md-3 p-right single-right">
+				<h3>Loại sản phẩm</h3>
+					<ul class="product-categories">
+                        <?php
+						global $conn;
+                        $layLoaiSP="SELECT * FROM loaisp";
+                        $truyvan_layLoaiSP=mysqli_query($conn,$layLoaiSP);
+                        while($cot=mysqli_fetch_array($truyvan_layLoaiSP))
+                        {
+                            ?>
+                            <li><a href="DanhMucSanPham.php?loaisp=<?php echo $cot["MaLoaiSP"] ?>"><?php echo $cot["TenLoai"] ?></a></li>
+                        <?php
+                        }
+                        ?>
+					</ul>
+				<h3>Giá</h3>
+					<ul class="product-categories p1">
+                        <li><a href="DanhMucSanPham.php?gia=100000">Dưới 100.000</a></li>
+                        <li><a href="DanhMucSanPham.php?gia=200000">Dưới 200.000</a></li>
+                        <li><a href="DanhMucSanPham.php?gia=300000">Dưới 300.000</a></li>
+                        <li><a href="DanhMucSanPham.php?gia=400000">Dưới 400.000</a></li>
+					</ul>
+			</div>
 			<div class="clearfix"> </div>
 		</div>
 	</div>
@@ -98,6 +117,6 @@
 </script>
 
 <?php
-    include_once "../include/footer.php";
+include("../layout/footer.php");
 ?>
 

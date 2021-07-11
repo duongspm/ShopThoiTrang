@@ -6,7 +6,7 @@
                     <div class="carousel-caption d-none d-md-block">
                         <h1 style="color:black">Pants</h1>
                         <h4 style="color:black">See how good they feel.</h4>
-                        <a href="SanPham.php">
+                        <a href="products.php">
                             <button type="button" class="btn btn-success custom-slide-btn"><label>Buy Now</label></button></a>
                     </div>
                 </div>
@@ -15,7 +15,7 @@
                     <div class="carousel-caption d-none d-md-block">
                         <h1 style="color:black">Clothes</h1>
                         <h4 style="color:black">For All Walks of Life.</h4>
-                        <a href="SanPham.php">
+                        <a href="products.php">
                             <button type="button" class="btn btn-success custom-slide-btn"><label>Buy Now</label></button></a>
                     </div>
                 </div>
@@ -35,19 +35,16 @@
     <div class="container index-category">
         <div class="row">
             <?php
-            
-					global $conn;
-                    $layLoaiSP="SELECT * FROM loaisp";
-                    $truyvan_layLoaiSP=mysqli_query($conn,$layLoaiSP);
-                    while($cot=mysqli_fetch_array($truyvan_layLoaiSP))
-                    {
+                $sql_slider = mysqli_query($conn,"SELECT * FROM loaisp ORDER BY MaLoaiSP");
+                while($row_slider = mysqli_fetch_array($sql_slider))
+                {
             ?>
             <div class="col-sm-6 col-md-6 column-in-center">
                 <div class="cate-2">
-                <img class="d-block slide-pic" src="../admin/products/<?php echo $cot['HinhAnhLoaiSP']?>" alt="First slide">
+                <img class="d-block slide-pic" src="../admin/products/<?php echo $row_slider['HinhAnhLoaiSP']?>" alt="First slide">
                     <div class="carousel-caption d-none d-md-block">
-                    <h1 style="color:black"><a href="DanhMucSanPham.php?loaisp=<?php echo $cot["MaLoaiSP"] ?>"><?php echo $cot['TenLoai']?></h1></a>
-                        <h4 style="color:black"><?php echo $cot['MoTa']?></h4>
+                        <h1 style="color:black"><a href="products.php"><?php echo $row_slider['TenLoai']?></a></h1>
+                        <h4 style="color:black"><?php echo $row_slider['MoTa']?></h4>
                     </div>
                 </div>
                 <br>
@@ -69,7 +66,7 @@
             
         </div>
         <div class="top_main">
-            <h2>Hot products</h2>
-            <a href="SanPham.php">show all</a>
+		<h2>Hot products</h2>
+		<a href="products.php">show all</a>
 		<div class="clear"></div>
     </div>

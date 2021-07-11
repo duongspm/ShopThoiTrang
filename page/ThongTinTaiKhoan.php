@@ -13,65 +13,69 @@ $cot=mysqli_fetch_array($truyvanlayThongTin);
 
 ?>
 
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li><a href="index.php">Trang chủ</a></li>
+                <li class="active">Thông tin tài khoản</li>
+            </ol>
+        </div>
+    </div>
+</div>
 <!--end-breadcrumbs-->
 <!--start-account-->
 <div class="account">
     <div class="container">
         <div class="account-bottom">
             <div class="col-md-6 account-left">
-            <form method="post" action="<?php echo $_SERVER["PHP_SELF"] ?>">
+                <form method="post" action="<?php echo $_SERVER["PHP_SELF"] ?>">
                     <div class="account-top heading">
                         <h3>Thông tin tài khoản </h3>
+                        <a href="#" id="a_doimatkhau">Đổi mật khẩu</a>
+                        <br/>
+                        <a href="#" id="a_doithongtin">Thay thông tin tài khoản</a>
                     </div>
-                    <br>
-                    <div class="card">
-                        <img class="card-img-top" src="../images/img_avatar1.png" alt="Card image" style="width: 200px;">
-                        <hr>
-                        <div class="address">
-                            <h2><?php echo $cot["HoTen"]; ?></h2>
-                        </div>
-                        <hr>
-                        <div class="address">
-                            <h3>Tên đăng nhập</h3>
-                            <input readonly id="tendangnhap" type="hidden" value="<?php echo $cot["TenDangNhap"]; ?>">
-                            <p><?php echo $cot["TenDangNhap"]; ?></p>
-                        </div>
-                        <div class="address">
-                            <h3>Mật khẩu</h3>
-                            <input type="password" readonly class="form-control" value="<?php echo $cot["MatKhau"]; ?>">
-                        </div>
-                        <div class="address">
-                            <h3>Ngày sinh</h3>
-                            <p></p>
-                            <input readonly class="form-control" value="<?php echo date("d/m/Y",strtotime($cot["NgaySinh"])); ?>">
-                        </div>
-                        <div class="address">
-                            <h3>Giới tính</h3>
-                            <input readonly class="form-control" value=" <?php
-                                if($cot["GioiTinh"]=="F")
-                                    echo "Nữ";
-                                else
-                                    echo "Nam";
-                        ?>">
-                        </div>
-                        <div class="address">
-                            <h3>Địa chỉ</h3>
-                            <input readonly class="form-control" value="<?php echo $cot["DiaChi"]; ?>">
-                        </div>
-                        <div class="address">
-                            <h3>Điện thoại</h3>
-                            <input readonly class="form-control" value="<?php echo $cot["DienThoai"]; ?>">
-                        </div>
-                        <div class="address">
-                            <h3>Email</h3>
-                            <input readonly class="form-control" value="<?php echo $cot["Email"]; ?>">
-                        </div>
-                        <hr>
-                        <div class="account-top heading">
-                            <a class="button" href="#" id="a_doimatkhau">Đổi mật khẩu</a>
-                            <hr/>
-                            <a class="button" href="#" id="a_doithongtin">Thay thông tin tài khoản</a>
-                        </div>
+                    <div class="address">
+                        <span>Tên đăng nhập</span>
+                        <input id="tendangnhap" type="hidden" value="<?php echo $cot["TenDangNhap"]; ?>">
+                        <p><?php echo $cot["TenDangNhap"]; ?></p>
+                    </div>
+
+                    <div class="address">
+                        <span>Mật khẩu</span>
+                        <p>******** </p>
+                    </div>
+                    <div class="address">
+                        <span>Họ tên</span>
+                        <p><?php echo $cot["HoTen"]; ?></p>
+                    </div>
+                    <div class="address">
+                        <span>Ngày sinh</span>
+                        <p><?php echo date("d/m/Y",strtotime($cot["NgaySinh"])); ?></p>
+                    </div>
+                    <div class="address">
+                        <span>Giới tính</span>
+                        <p>
+                       <?php
+                            if($cot["GioiTinh"]=="F")
+                                echo "Nữ";
+                            else
+                                echo "Nam";
+                       ?>
+                        </p>
+                    </div>
+                    <div class="address">
+                        <span>Địa chỉ</span>
+                        <p><?php echo $cot["DiaChi"]; ?></p>
+                    </div>
+                    <div class="address">
+                        <span>Điện thoại</span>
+                        <p><?php echo $cot["DienThoai"]; ?></p>
+                    </div>
+                    <div class="address">
+                        <span>Email</span>
+                        <p><?php echo $cot["Email"]; ?></p>
                     </div>
                 </form>
             </div>
@@ -93,10 +97,7 @@ $cot=mysqli_fetch_array($truyvanlayThongTin);
                         <input id="nlmatkhaumoi" type="password">
                     </div>
                     <div class="address">
-                        <div class="alert alert-primary">
-                            <strong>Thông báo!<span style="color: red;" id="dmk_thongbao"></span></strong>
-                        </div>
-                        
+                        <span style="color: red;" id="dmk_thongbao"></span>
                         <input id="doimatkhau" type="submit" value="Đổi mật khẩu">
                     </div>
             </div>
@@ -142,18 +143,12 @@ $cot=mysqli_fetch_array($truyvanlayThongTin);
                     <div class="address">
                         <span>Email</span>
                         <input id="email" name="email" type="text" value="<?php echo $cot["Email"] ?>">
-                        <div class="input-group-append">
-                            <span class="input-group-text">@example.com</span>
-                        </div>
                     </div>
                     <div class="address">
-                        <div class="alert alert-info">
-                            <strong>Thông báo!</strong><span style="color: red;" id="thongbao"></span>
-                        </div>
-                        
+                        <span style="color: red;" id="thongbao"></span>
                     </div>
                     <div class="address new">
-                        <input id="doithongtin" type="submit" value="Submit">
+                        <input id="doithongtin" type="submit" value="Thay đổi">
                     </div>
                 </form>
             </div>
@@ -186,13 +181,13 @@ $cot=mysqli_fetch_array($truyvanlayThongTin);
             if( matkhaucu=="" || matkhaumoi=="")
             {
                 loi++;
-                $('#dmk_thongbao').text("Mời bạn nhập mặt khẩu cũ và mặt khẩu mới");
+                $('#dmk_thongbao').text("Hãy nhập đầy đủ thông tin");
             }
 
             if(matkhaumoi!=nhaplaimatkhaumoi)
             {
                 loi++;
-                $('#dmk_thongbao').text("Mật khẩu không trùng khớp");
+                $('#dmk_thongbao').text("Mật khẩu mới nhập lại không trùng khớp");
             }
 
             if(loi!=0)

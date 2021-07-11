@@ -9,7 +9,7 @@
 <div class="navigation">
     <?php
         include_once 'connect/database.php';
-        $sql_category = 'SELECT * FROM loaisp ORDER BY MaLoaiSP DESC';
+        $sql_category = 'SELECT * FROM loaisanpham ORDER BY MaLoai DESC';
         $fetch_category = mysqli_query($conn,$sql_category);
             function phan_trang($tenCot,$tenBang,$dieuKien,$soLuongSP,$trang,$dieuKienTrang)
             {

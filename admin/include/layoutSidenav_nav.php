@@ -22,7 +22,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="catadd.php">Thêm loại sản phẩm</a>
-                                    <a class="nav-link" href="cat.php">Danh sách loại sản phẩm</a>
+                                    <a class="nav-link" href="cat.php">Danh sách sản phẩm</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -33,7 +33,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="productadd.php">Thêm sản phẩm</a>
-                                    <a class="nav-link" href="productlist.php">Danh sách sản phẩm</a>
+                                    <a class="nav-link" href="productlist.php">Danh sản phẩm</a>
                                 </nav>
                             </div>
                             
@@ -68,10 +68,6 @@
                             <a class="nav-link" href="comment.php">
                                 <div class="sb-nav-link-icon"><i class='far fa-comment-dots'></i></i></div>
                                 Bình luận
-                            </a>
-                            <a class="nav-link" href="DanhGia.php">
-                                <div class="sb-nav-link-icon"><i class='fas fa-star-half-alt'></i></div>
-                                Đánh giá sản phẩm
                             </a>
                             <div class="sb-sidenav-menu-heading">Quản lý Nhà cung cấp sản phẩm</div>
                             <a class="nav-link" href="nhasanxuatlist.php">

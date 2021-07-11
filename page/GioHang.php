@@ -1,13 +1,23 @@
 <?php
-include("../layout/header.php");
+    include_once "layout/header.php";
 
 if(!isset($_SESSION["giohang"]))
     echo "<script>location='SanPham.php';</script>";
 
-//global $conn;
+global $conn;
 
 ?>
 	<!--start-breadcrumbs-->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="breadcrumbs-main">
+				<ol class="breadcrumb">
+					<li><a href="index.php">Trang Chủ</a></li>
+					<li class="active">Giỏ hàng</li>
+				</ol>
+			</div>
+		</div>
+	</div>
 	<!--end-breadcrumbs-->
 <div id="giohang">
     <!--start-ckeckout-->
@@ -35,7 +45,7 @@ if(!isset($_SESSION["giohang"]))
                             ?>
                             <ul class="cart-header">
                                 <div class="close1" onclick="XoaGioHang(<?php echo $cotGH["masp"] ?>)"> </div>
-                                <li class="ring-in"><a href="ChiTietSanPham.php?MaSP=<?php echo $cotGH["masp"]; ?>" ><img width="100"  src="../admin/products/<?php echo $cotGH["hinhsp"]; ?>" class="img-responsive" alt=""></a>
+                                <li class="ring-in"><a href="ChiTietSanPham.php?MaSP=<?php echo $cotGH["masp"]; ?>" ><img width="100"  src="../images/HinhSP/<?php echo $cotGH["hinhsp"]; ?>" class="img-responsive" alt=""></a>
                                 </li>
                                 <li><span><?php echo $cotGH["tensp"]; ?></span></li>
                                 <li>
@@ -70,14 +80,12 @@ if(!isset($_SESSION["giohang"]))
 
         <?php if(isset($_SESSION["tendangnhap"])){ ?>
 
-            <a id="angiohang" class="button" style="cursor:pointer">Đặt hàng</a>
+            <a id="angiohang" class="add-cart cart-check" style="cursor:pointer">Đặt hàng</a>
 
         <?php }else{ ?>
 
-            <!-- <span class="text-danger">Bạn cần đăng nhập để đặt hàng.</span> -->
-            <div class="alert alert-danger">
-                <strong>Thông báo!</strong> Đăng nhập để mua hàng
-            </div>
+            <span class="text-danger">Bạn cần đăng nhập để đặt hàng.</span>
+
         <?php } ?>
     </div>
 </div>
@@ -96,13 +104,13 @@ if(isset($_SESSION["tendangnhap"])) {
     <div class="container">
         <div class="ckeckout-top">
             <div class=" cart-items heading">
-                <h3>Kiểm tra đơn hàng</h3>
-                <br>
+                <h3>Đặt hàng</h3>
+
                 <div >
                     <ul class="unit">
                         <li><span>Thông tin người đặt</span></li>
                         <li><span></span></li>
-                        <li><span>Ngày đặt hàng</span></li>
+                        <li><span>Ngày đặt</span></li>
                         <li><span>Tổng sản phẩm</span></li>
                         <li><span>Tổng tiền</span></li>
                         <div class="clearfix"> </div>
@@ -111,9 +119,8 @@ if(isset($_SESSION["tendangnhap"])) {
 
                             <li>
                                 <span style="text-align: left">
-                                    Tên người nhận <input type="text" value="<?php echo $cotTV["HoTen"]; ?>">
-                                    Địa chỉ <textarea style="width: 200px;" rows="2" type="text" id="noigiao" name="noigiao"><?php echo $cotTV["DiaChi"] ?></textarea>
-                                    SĐT người nhận <input type="text" value="<?php echo $cotTV["DienThoai"]; ?>">
+                                    Tên người đặt <input type="text" value="<?php echo $cotTV["HoTen"]; ?>">
+                                    Nơi giao <textarea style="width: 200px;" rows="4" type="text" id="noigiao" name="noigiao"><?php echo $cotTV["DiaChi"] ?></textarea>
                                 </span>
                             </li>
                             <li><span></span></li>
@@ -129,7 +136,7 @@ if(isset($_SESSION["tendangnhap"])) {
 
     <div class="container" style="text-align: right;padding-right: 30px">
 
-        <input  class="button" type="submit" value="Đặt hàng">
+        <input  class="add-cart cart-check" type="submit" value="Đặt hàng">
     </div>
     </form>
 </div>
@@ -167,7 +174,7 @@ if(isset($_SESSION["tendangnhap"])) {
                 }
 
                 unset($_SESSION["giohang"]);
-                echo "<script>alert('Cám ơn bạn đã đến với cửa hàng của chúng tôi !! Đơn hàng của bạn sẽ được chuyển đi sớm nhất');location='SanPham.php';</script>";
+                echo "<script>alert('Đặt hàng thành công');location='SanPham.php';</script>";
             }
             else
             {
@@ -190,5 +197,5 @@ if(isset($_SESSION["tendangnhap"])) {
     })
 </script>
 <?php
-    include_once "../layout/footer.php";?>
-
+include("../layout/footer.php");
+?>

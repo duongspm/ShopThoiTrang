@@ -6,6 +6,16 @@ if(isset($_SESSION["tendangnhap"]))
     echo "<script>location='SanPham.php';</script>";
 ?>
 
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li><a href="index.php">Trang chủ</a></li>
+                <li class="active">Trang đăng ký</li>
+            </ol>
+        </div>
+    </div>
+</div>
 <!--end-breadcrumbs-->
 <!--start-account-->
 <div class="account">
@@ -51,7 +61,7 @@ if(isset($_SESSION["tendangnhap"]))
                     </div>
                     <div class="address">
                         <span>Email</span>
-                        <input id="email" name="email" type="email">
+                        <input id="email" name="email" type="text">
                     </div>
                     <div class="address">
                        <span style="color: red;" id="thongbao"></span>
@@ -79,22 +89,7 @@ if(isset($_SESSION["tendangnhap"]))
                         <span style="color: red;" id="dn_thongbao"></span>
                         <a class="forgot" href="QuenMatKhau.php">Quên mật khẩu?</a>
                         <input id="dangnhap" type="submit" value="Đăng nhập">
-                    </div>
-                    <br>
-                    <br>
-                    <div class="login_col">
-                        <div class="login_main">
-                            <div class="login_main_fire">
-                                <a id="login_via_fb" href="#" class="login_fire">
-                                    <i class='fab fa-facebook-square' style='font-size:36px'></i>   
-                                    <span>Facebook</span>
-                                </a>
-                                <a id="login_via_gg" href="#" class="login_fire">
-                                    <i class='fab fa-google' style='font-size:36px'></i>
-                                    <span>Google</span>
-                                </a>
-                            </div>
-                        </div>
+
                     </div>
             </div>
             </form>
@@ -161,12 +156,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
                 loi++;
                 $('#thongbao').text("Mật khẩu nhập lại không trùng khớp");
             }
-            var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-            if (vnf_regex.test(dienthoai) == false) 
-                {
-                    loi++;
-                    $('#thongbao').text("Số điện thoại của bạn không đúng định dạng!");
-                }
 
             if(isNaN(dienthoai))
             {
@@ -199,6 +188,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 </script>
 
 <?php
-    include_once "../layout/footer.php";
+include("../layout/footer.php");
 ?>
 
